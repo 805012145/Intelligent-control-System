@@ -3,6 +3,7 @@ package com.example.intelligentcontrolsystem.util;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.ScanResult;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -138,6 +139,9 @@ public final class Util {
         }
     }
 
+    public ScanResult<Map.Entry<String, String>> hscan(String key, String cursor) {
+        return jedis.hscan(key, cursor);
+    }
 
     /**
      * 普通缓存放入并设置时间
@@ -208,6 +212,10 @@ public final class Util {
         return jedis.hgetAll(key);
     }
 
+    public List<String> hvals(String key) {
+        return jedis.hvals(key);
+    }
+
     /**
      * HashSet
      * @param key 键
@@ -222,6 +230,12 @@ public final class Util {
             return false;
         }
     }
+
+    public Set<String> keys(String key) {
+        return jedis.keys(key);
+    }
+
+
 
 
     /**
