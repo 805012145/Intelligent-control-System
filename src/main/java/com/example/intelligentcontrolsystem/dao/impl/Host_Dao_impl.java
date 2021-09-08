@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class Host_Dao_impl implements Host_Dao {
-    @Override
-    public Host get_user_info(String id) throws Exception {
-        return null;
-    }
+//    @Override
+//    public Host get_user_info(String id) throws Exception {
+//        return null;
+//    }
 }

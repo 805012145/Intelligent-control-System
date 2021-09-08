@@ -23,6 +23,9 @@ public class Node {
 
     private String switch_id;
 
+    public Node() {
+    }
+
     public Node(String name, String symbolsize, String x, String y, String value, String category, String field, String ip, String switch_id) {
         this.name = name;
         this.symbolsize = symbolsize;
