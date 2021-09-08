@@ -8,9 +8,9 @@ public class Host extends Node{
 
     private String ip;
 
-    public Host(String id, String name, String symbolsize, String x, String y,
+    public Host(String name, String symbolsize, String x, String y,
                 String value, String category, String field, String switch_id, String ip) {
-        super(id, name, symbolsize, x, y, value, category, field);
+        super(name, symbolsize, x, y, value, category, field);
         this.switch_id = switch_id;
         this.ip = ip;
     }

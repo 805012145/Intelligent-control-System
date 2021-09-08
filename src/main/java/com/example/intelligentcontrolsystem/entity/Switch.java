@@ -1,9 +1,9 @@
 package com.example.intelligentcontrolsystem.entity;
 
 public class Switch extends Node{
-    public Switch(String id, String name, String symbolsize, String x, String y,
+    public Switch(String name, String symbolsize, String x, String y,
                   String value, String category, String field) {
-        super(id, name, symbolsize, x, y, value, category, field);
+        super(name, symbolsize, x, y, value, category, field);
     }
 
     @Override

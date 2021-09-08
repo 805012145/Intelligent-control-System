@@ -22,9 +22,8 @@ public class Node {
     public Node() {
     }
 
-    public Node(String id, String name, String symbolsize, String x, String y,
+    public Node(String name, String symbolsize, String x, String y,
                 String value, String category, String field) {
-        this.id = id;
         this.name = name;
         this.symbolsize = symbolsize;
         this.x = x;
