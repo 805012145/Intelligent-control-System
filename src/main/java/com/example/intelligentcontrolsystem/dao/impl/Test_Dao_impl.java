@@ -1,60 +1,41 @@
 package com.example.intelligentcontrolsystem.dao.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.intelligentcontrolsystem.dao.Test_Dao;
 import com.example.intelligentcontrolsystem.entity.Controller;
-import com.example.intelligentcontrolsystem.entity.Node;
-import com.example.intelligentcontrolsystem.util.JSONUtil;
+import com.example.intelligentcontrolsystem.entity.Link;
 import com.example.intelligentcontrolsystem.util.Util;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
+
 
 @Repository
 public class Test_Dao_impl implements Test_Dao {
     Util util = Util.getInstance();
     @Override
-    public List<Node> test() throws Exception {
+    public String test() throws Exception {
 
-        util.hset("node:Controller1", "id" , "5757");
-        util.hset("node:Controller1", "name" , "Controller");
-        util.hset("node:Controller1", "symbolsize" , "30");
-        util.hset("node:Controller1", "x" , "30");
-        util.hset("node:Controller1", "y" , "30");
-        util.hset("node:Controller1", "value" , "10");
-        util.hset("node:Controller1", "category" , "0");
-        util.hset("node:Controller1", "field" , "1");
+        Controller controller = new Controller("controller", "10", "10","20", "10", "1", "1","192.168.57.131");
+        Link link = new Link("1", "1", "2", "1", "1", "10M", "10M", "0", "1ms", "0");
+        util.hset("node:Controller", "001", new Gson().toJson(controller));
+        util.hset("node:Controller", "002", new Gson().toJson(controller));
+        util.hset("link", "001", new Gson().toJson(link));
+        util.hset("link", "002", new Gson().toJson(link));
 
-        util.hset("node:Controller2", "id" , "6767");
-        util.hset("node:Controller2", "name" , "Controller");
-        util.hset("node:Controller2", "symbolsize" , "30");
-        util.hset("node:Controller2", "x" , "60");
-        util.hset("node:Controller2", "y" , "60");
-        util.hset("node:Controller2", "value" , "10");
-        util.hset("node:Controller2", "category" , "0");
-        util.hset("node:Controller2", "field" , "1");
-
-
-
-        Node node = new Node();
-        Set<String> keys = util.keys("node:Con*");
-        List<String> key_List = new ArrayList<>(keys);
-        List<Node> nodes = new ArrayList<>();
-
-        for (String key : key_List) {
-            node.setId(util.hget(key, "id"));
-            node.setName(util.hget(key, "name"));
-            node.setSymbolsize(util.hget(key, "symbolsize"));
-            node.setX(util.hget(key, "x"));
-            node.setY(util.hget(key, "y"));
-            node.setValue(util.hget(key, "value"));
-            node.setCategory(util.hget(key, "category"));
-            node.setField(util.hget(key, "field"));
-            nodes.add(node);
+        List<String> keys = new ArrayList<>(util.hmget("node:Controller").keySet()); //controller表里的item集合作为键集合
+        List<Controller> controllers = new ArrayList<>();
+        for (String key : keys) {
+            Controller controller1 = new Gson().fromJson(util.hget("node:Controller", key), new TypeToken<Controller>() {}.getType());
+            controller1.setId(key);
+            controllers.add(controller1);
         }
-        return nodes;
+        System.out.println(controllers);
+
+
+        return new Gson().toJson(controllers);
     }
 }

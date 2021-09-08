@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+//@Service
 public class Switch_Ser_impl implements Switch_Ser {
     @Override
     public List<Switch> getAll() {

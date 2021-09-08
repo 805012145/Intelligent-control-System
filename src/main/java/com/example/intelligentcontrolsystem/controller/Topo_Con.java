@@ -38,6 +38,7 @@ public class Topo_Con {
     @RequestMapping(value = "/business/{id}", method = RequestMethod.GET)
     @ResponseBody
     public String get_bus_by_id(@PathVariable("id") String id) {
+        System.out.println(id);
         List<Business> businesses = business_ser.getBusInfoBySrcId(id);
         return new Gson().toJson(businesses);
     }
@@ -47,8 +48,8 @@ public class Topo_Con {
     public String get_bus_by_link(@PathVariable("src") String src, @PathVariable("src_port") String src_port,
                                   @PathVariable("dst") String dst, @PathVariable("dst_port") String dst_port,
                                   @PathVariable("link_type") String link_type) {
+        System.out.println(src +" "+ src_port +" "+ dst +" "+ dst_port +" "+ link_type);
         List<Business> businesses = business_ser.getBusInfoByParam(src, src_port, dst, dst_port, link_type);
         return new Gson().toJson(businesses);
     }
-
 }

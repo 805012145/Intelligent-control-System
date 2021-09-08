@@ -16,6 +16,6 @@ public class Test_Con {
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     @ResponseBody
     public String test() throws Exception {
-        return new Gson().toJson(test_ser.test());
+        return test_ser.test();
     }
 }

@@ -5,5 +5,5 @@ import com.example.intelligentcontrolsystem.entity.Node;
 import java.util.List;
 
 public interface Test_Ser {
-    public List<Node> test() throws Exception;
+    public String test() throws Exception;
 }

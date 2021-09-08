@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+//@Service
 public class Controller_Ser_impl implements Controller_Ser {
     @Override
     public List<Controller> getAll() {

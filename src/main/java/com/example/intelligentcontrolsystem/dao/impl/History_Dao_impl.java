@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class History_para_impl implements History_para_Dao {
+public class History_Dao_impl implements History_para_Dao {
 
     @Override
     public List<History_para> getAllHistoryParam() {

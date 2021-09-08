@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+//@Service
 public class Host_Ser_impl implements Host_Ser {
     @Override
     public List<Host> getAll() {

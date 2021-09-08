@@ -3,30 +3,28 @@ package com.example.intelligentcontrolsystem.entity;
 import java.util.Objects;
 
 public class Node {
-    private String id;
+    public String id;
 
-    private String name;
+    public String name;
 
-    private String symbolsize;
+    public String symbolsize;
 
-    private String x;
+    public String x;
 
-    private String y;
+    public String y;
 
-    private String value;
+    public String value;
 
-    private String category;
+    public String category;
 
-    private String field;
-
-    private String ip;
-
-    private String switch_id;
+    public String field;
 
     public Node() {
     }
 
-    public Node(String name, String symbolsize, String x, String y, String value, String category, String field, String ip, String switch_id) {
+    public Node(String id, String name, String symbolsize, String x, String y,
+                String value, String category, String field) {
+        this.id = id;
         this.name = name;
         this.symbolsize = symbolsize;
         this.x = x;
@@ -34,8 +32,6 @@ public class Node {
         this.value = value;
         this.category = category;
         this.field = field;
-        this.ip = ip;
-        this.switch_id = switch_id;
     }
 
     public String getId() {
@@ -102,35 +98,17 @@ public class Node {
         this.field = field;
     }
 
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public String getSwitch_id() {
-        return switch_id;
-    }
-
-    public void setSwitch_id(String switch_id) {
-        this.switch_id = switch_id;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Node node = (Node) o;
-        return Objects.equals(id, node.id) && Objects.equals(name, node.name) && Objects.equals(symbolsize, node.symbolsize) && Objects.equals(x, node.x) &&
-                Objects.equals(y, node.y) && Objects.equals(value, node.value) && Objects.equals(category, node.category) && Objects.equals(field, node.field) &&
-                Objects.equals(ip, node.ip) && Objects.equals(switch_id, node.switch_id);
+        return Objects.equals(id, node.id) && Objects.equals(name, node.name) && Objects.equals(symbolsize, node.symbolsize) && Objects.equals(x, node.x) && Objects.equals(y, node.y) && Objects.equals(value, node.value) && Objects.equals(category, node.category) && Objects.equals(field, node.field);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, symbolsize, x, y, value, category, field, ip, switch_id);
+        return Objects.hash(id, name, symbolsize, x, y, value, category, field);
     }
 
     @Override
@@ -144,8 +122,6 @@ public class Node {
                 ", value='" + value + '\'' +
                 ", category='" + category + '\'' +
                 ", field='" + field + '\'' +
-                ", ip='" + ip + '\'' +
-                ", switch_id='" + switch_id + '\'' +
                 '}';
     }
 }
