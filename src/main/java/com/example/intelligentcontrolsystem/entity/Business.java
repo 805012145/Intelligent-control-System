@@ -8,11 +8,11 @@ public class Business {
 
     private String dst;
 
-    private List<Integer> route;
+    private String route;
 
-    private List<Integer> link_type;
+    private String link_type;
 
-    private List<Double> bandwidth;
+    private String bandwidth;
 
     private String delay;
 
@@ -22,8 +22,8 @@ public class Business {
 
     private String id;
 
-    public Business(String src, String dst, List<Integer> route, List<Integer> link_type,
-                    List<Double> bandwidth, String delay, String time, String type) {
+    public Business(String src, String dst, String route, String link_type,
+                    String bandwidth, String delay, String time, String type) {
         this.src = src;
         this.dst = dst;
         this.route = route;
@@ -42,15 +42,15 @@ public class Business {
         this.dst = dst;
     }
 
-    public void setRoute(List<Integer> route) {
+    public void setRoute(String route) {
         this.route = route;
     }
 
-    public void setLink_type(List<Integer> link_type) {
+    public void setLink_type(String link_type) {
         this.link_type = link_type;
     }
 
-    public void setBandwidth(List<Double> bandwidth) {
+    public void setBandwidth(String bandwidth) {
         this.bandwidth = bandwidth;
     }
 
@@ -78,15 +78,15 @@ public class Business {
         return dst;
     }
 
-    public List<Integer> getRoute() {
+    public String getRoute() {
         return route;
     }
 
-    public List<Integer> getLink_type() {
+    public String getLink_type() {
         return link_type;
     }
 
-    public List<Double> getBandwidth() {
+    public String getBandwidth() {
         return bandwidth;
     }
 
