@@ -17,7 +17,11 @@ public class History_Con {
     @Autowired
     private History_para_Ser history_para_ser;
 
-    @RequestMapping(value = "/historydata", method = RequestMethod.GET)
+    /**
+     * 历史信息展示
+     * @return
+     */
+    @RequestMapping(value = "/history/historydata", method = RequestMethod.GET)
     @ResponseBody
     public String historyData() {
         List<History_para> history_paras = history_para_ser.getAllHistoryParam();

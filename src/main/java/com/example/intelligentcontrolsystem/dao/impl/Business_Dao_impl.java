@@ -52,9 +52,17 @@ public class Business_Dao_impl implements Business_Dao {
 
     @Override
     public List<Business> getBusInfo() {
-        return null;
+        List<Business> businesses = new ArrayList<>();
+        List<String> keys = new ArrayList<>(util.hmget("business").keySet());
+        for (String key : keys) {
+            Business business = new Gson().fromJson(util.hget("business", key), new TypeToken<Business>() {}.getType());
+            business.setId(key);
+            businesses.add(business);
+        }
+        return businesses;
     }
 
+    //todo 获取各业务数目
     @Override
     public String getBusNumByEachType() {
         return null;

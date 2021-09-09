@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface Link_Dao {
     List<Link> getAll();
+
+    String getBWInfoOfAllType();
+
+    String getBWConOfAllLinks();
 }

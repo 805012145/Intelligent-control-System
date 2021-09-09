@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface Link_Ser {
     List<Link> getAll();
+
+    String getBWInfoOfAllType();
+
+    String getBWConOfAllLinks();
 }

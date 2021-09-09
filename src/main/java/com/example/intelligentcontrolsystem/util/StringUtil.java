@@ -20,6 +20,7 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(StringUtil.hasStr("1", "2", "{1, 2,3,4,5}"));
+        long i = 10000000000l;
+        System.out.println(i+1);
     }
 }

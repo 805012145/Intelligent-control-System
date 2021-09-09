@@ -17,4 +17,14 @@ public class Link_Ser_impl implements Link_Ser {
     public List<Link> getAll() {
         return link_dao.getAll();
     }
+
+    @Override
+    public String getBWInfoOfAllType() {
+        return link_dao.getBWInfoOfAllType();
+    }
+
+    @Override
+    public String getBWConOfAllLinks() {
+        return link_dao.getBWConOfAllLinks();
+    }
 }

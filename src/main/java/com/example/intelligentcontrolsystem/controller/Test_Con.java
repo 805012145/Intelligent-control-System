@@ -1,7 +1,6 @@
 package com.example.intelligentcontrolsystem.controller;
 
 import com.example.intelligentcontrolsystem.service.Test_Ser;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

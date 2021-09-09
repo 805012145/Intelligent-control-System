@@ -24,11 +24,12 @@ public class Test_Dao_impl implements Test_Dao {
         Switch aswitch = new Switch("switch", "10", "10", "10", "10", "10", "1");
         Host host = new Host("Host",  "10", "10", "10", "10", "10", "1", "1", "10.0.0.1");
         Controller controller = new Controller("controller", "10", "10","20", "10", "1", "1");
-        Link link = new Link("1", "1", "2", "1", "1", "10M", "10M", "0", "1ms", "0");
+        Link link = new Link("1", "1", "2", "1", "1", "100", "100", "0", "1", "0");
+        Link link1 = new Link("2", "2", "1", "2", "2", "100", "100", "0", "1", "0");
         util.hset("node:Controller", "001", new Gson().toJson(controller));
         util.hset("node:Controller", "002", new Gson().toJson(controller));
         util.hset("link", "001", new Gson().toJson(link));
-        util.hset("link", "002", new Gson().toJson(link));
+        util.hset("link", "002", new Gson().toJson(link1));
         util.hset("node:Switch", "001", new Gson().toJson(aswitch));
         util.hset("node:Switch", "002", new Gson().toJson(aswitch));
         util.hset("node:Host", "001", new Gson().toJson(host));
