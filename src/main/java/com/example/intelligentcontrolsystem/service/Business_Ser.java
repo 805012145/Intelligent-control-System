@@ -13,4 +13,6 @@ public interface Business_Ser {
     List<Business> getBusInfo();
 
     String getBusNumByEachType();
+
+    String getBusNum();
 }

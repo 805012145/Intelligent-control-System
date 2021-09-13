@@ -192,7 +192,7 @@ public final class Util {
     }
 
 
-    // ================================Map=================================
+    // ================================Map=================================//
 
     /**
      * HashGet
@@ -267,14 +267,9 @@ public final class Util {
      * @param value 值
      * @return true 成功 false失败
      */
-    public boolean hset(String key, String item, String value) {
-        try {
-            jedis.hset(key, item, value);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public String  hset(String key, String item, String value) {
+        jedis.hset(key, item, value);
+        return key;
     }
 
     /**
@@ -615,7 +610,15 @@ public final class Util {
             e.printStackTrace();
             return 0;
         }
-
     }
+
+    public Long lpush(String key, String... strings) {
+        return jedis.lpush(key, strings);
+    }
+
+    public List<String> lgetall(String key) {
+        return jedis.lrange(key, 0, -1);
+    }
+
 
 }

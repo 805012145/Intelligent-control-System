@@ -33,4 +33,9 @@ public class Business_Ser_impl implements Business_Ser {
     public String getBusNumByEachType() {
         return business_dao.getBusNumByEachType();
     }
+
+    @Override
+    public String getBusNum() {
+        return business_dao.getBusNum();
+    }
 }

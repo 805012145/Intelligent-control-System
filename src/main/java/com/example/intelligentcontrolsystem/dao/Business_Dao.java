@@ -14,4 +14,6 @@ public interface Business_Dao {
     List<Business> getBusInfo();
 
     String getBusNumByEachType();
+
+    String getBusNum();
 }

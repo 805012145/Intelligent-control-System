@@ -17,12 +17,11 @@ public class History_para {
     private String id;
 
     public History_para(String controller_sum, String link_sum, String switch_sum,
-                        String host_sum, String business_sum, String throughout) {
+                        String host_sum, String throughout) {
         this.controller_sum = controller_sum;
         this.link_sum = link_sum;
         this.switch_sum = switch_sum;
         this.host_sum = host_sum;
-        this.business_sum = business_sum;
         this.throughout = throughout;
     }
 

@@ -8,8 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Repository
 public class Business_Dao_impl implements Business_Dao {
@@ -39,6 +38,7 @@ public class Business_Dao_impl implements Business_Dao {
                 String[] routes = StringUtil.StringToArray(business.getRoute());
                 String[] link_types = StringUtil.StringToArray(business.getLink_type());
                 for (int i = 0; i < routes.length - 1; i++) {
+                    System.out.println(i + "  " + routes[i]);
                     if (routes[i].equals(src) && routes[i+1].equals(dst) && link_types[i].equals(link_type)
                             && System.currentTimeMillis() - Long.parseLong(business.getTime()) < 5) {
                         businesses.add(business);
@@ -65,6 +65,18 @@ public class Business_Dao_impl implements Business_Dao {
     //todo 获取各业务数目
     @Override
     public String getBusNumByEachType() {
-        return null;
+        Map<String, Integer> busNumByEachType = new HashMap<>();
+        List<String> keys = new ArrayList<>(util.hmget("business").keySet());
+        for (String key : keys) {
+            Business business = new Gson().fromJson(util.hget("business", key), new TypeToken<Business>() {}.getType());
+            business.setId(key);
+            busNumByEachType.merge(business.getType(), 1, Integer::sum);
+        }
+        return new Gson().toJson(busNumByEachType);
+    }
+
+    @Override
+    public String getBusNum() {
+       return String.valueOf(util.hmget("business").keySet().size());
     }
 }

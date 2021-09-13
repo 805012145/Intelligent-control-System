@@ -29,6 +29,7 @@ public class BandWidth_Con {
         return link_ser.getBWInfoOfAllType();
     }
 
+    //todo JSON字符串仍需重新设计
     /**
      * 带宽拥塞
      * @return

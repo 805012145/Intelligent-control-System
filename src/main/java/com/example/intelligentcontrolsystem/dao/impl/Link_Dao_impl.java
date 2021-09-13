@@ -48,19 +48,19 @@ public class Link_Dao_impl implements Link_Dao {
             link.setId(key);
             if (link.getLink_type().equals("1")) {
                 remain1 += Long.parseLong(link.getRemain_bandwidth());
-                used_BW1 += (Long.parseLong(link.getMax_bandwidth()) - remain1);
+                used_BW1 += (Long.parseLong(link.getMax_bandwidth()) - Long.parseLong(link.getRemain_bandwidth()));
             }else if (link.getLink_type().equals("2")) {
                 remain2 += Long.parseLong(link.getRemain_bandwidth());
-                used_BW2 += (Long.parseLong(link.getMax_bandwidth()) - remain1);
+                used_BW2 += (Long.parseLong(link.getMax_bandwidth()) - Long.parseLong(link.getRemain_bandwidth()));
             }else if (link.getLink_type().equals("3")) {
                 remain3 += Long.parseLong(link.getRemain_bandwidth());
-                used_BW3 += (Long.parseLong(link.getMax_bandwidth()) - remain1);
+                used_BW3 += (Long.parseLong(link.getMax_bandwidth()) - Long.parseLong(link.getRemain_bandwidth()));
             }else if (link.getLink_type().equals("4")) {
                 remain4 += Long.parseLong(link.getRemain_bandwidth());
-                used_BW4 += (Long.parseLong(link.getMax_bandwidth()) - remain1);
+                used_BW4 += (Long.parseLong(link.getMax_bandwidth()) - Long.parseLong(link.getRemain_bandwidth()));
             }else if (link.getLink_type().equals("5")) {
                 remain5 += Long.parseLong(link.getRemain_bandwidth());
-                used_BW5 += (Long.parseLong(link.getMax_bandwidth()) - remain1);
+                used_BW5 += (Long.parseLong(link.getMax_bandwidth()) - Long.parseLong(link.getRemain_bandwidth()));
             }
         }
         channel.setRemain1(String.valueOf(remain1));
@@ -87,19 +87,17 @@ public class Link_Dao_impl implements Link_Dao {
             link.setId(key);
             SrcDstPair srcDstPair = new SrcDstPair(link.getSrc(), link.getDst());
             pairlinksMap.computeIfAbsent(srcDstPair.getPair(), k -> new ArrayList<>());
-            System.out.println(srcDstPair);
             LinkEntity linkEntity = new LinkEntity(link.getScore(),link.getRemain_bandwidth(), link.getLink_type());
             String product = srcDstPair.getSrc()+":"+srcDstPair.getDst();
             linkEntity.setProduct(product);
             pairlinksMap.get(srcDstPair.getPair()).add(linkEntity);
         }
-        System.out.println(new Gson().toJson(pairlinksMap));
         return new Gson().toJson(pairlinksMap);
     }
 
 
 
-    private class LinkEntity {
+    public static class LinkEntity {
         private String score;
         private String amount;
         private String type;
