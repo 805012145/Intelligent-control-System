@@ -1,5 +1,8 @@
 package com.example.intelligentcontrolsystem.entity;
 
+import com.alibaba.fastjson.JSON;
+import com.google.gson.JsonObject;
+
 import java.util.Objects;
 
 public class SrcDstPair {
@@ -12,7 +15,8 @@ public class SrcDstPair {
     }
 
     public String getPair() {
-        return "src:"+this.src+","+"dst:"+this.dst;
+
+        return "src:"+src+",dst:"+dst;
     }
 
     public String getSrc() {
@@ -46,9 +50,6 @@ public class SrcDstPair {
 
     @Override
     public String toString() {
-        return "SrcDstPair{" +
-                "src='" + src + '\'' +
-                ", dst='" + dst + '\'' +
-                '}';
+        return "src=" + this.src + ", dst=" + this.dst;
     }
 }

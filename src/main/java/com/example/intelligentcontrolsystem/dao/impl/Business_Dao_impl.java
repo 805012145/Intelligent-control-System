@@ -15,6 +15,9 @@ public class Business_Dao_impl implements Business_Dao {
     Util util = Util.getInstance();
     @Override
     public List<Business> getBusInfoBySrcId(String id) {
+        if (!util.hasKey("business")) {
+            return null;
+        }
         List<Business> businesses = new ArrayList<>();
         List<String> keys = new ArrayList<>(util.hmget("business").keySet());
         for (String key : keys) {
@@ -29,6 +32,9 @@ public class Business_Dao_impl implements Business_Dao {
 
     @Override
     public List<Business> getBusInfoByParam(String src, String src_port, String dst, String dst_port, String link_type) {
+        if (!util.hasKey("business")) {
+            return null;
+        }
         List<Business> businesses = new ArrayList<>();
         List<String> keys = new ArrayList<>(util.hmget("business").keySet());
         for (String key : keys) {
@@ -40,7 +46,7 @@ public class Business_Dao_impl implements Business_Dao {
                 for (int i = 0; i < routes.length - 1; i++) {
                     System.out.println(i + "  " + routes[i]);
                     if (routes[i].equals(src) && routes[i+1].equals(dst) && link_types[i].equals(link_type)
-                            && System.currentTimeMillis() - Long.parseLong(business.getTime()) < 5) {
+                            && System.currentTimeMillis() - Long.parseLong(business.getTime()) < 5) {//todo 最近时间的界定
                         businesses.add(business);
                         break;
                     }
@@ -52,6 +58,9 @@ public class Business_Dao_impl implements Business_Dao {
 
     @Override
     public List<Business> getBusInfo() {
+        if (!util.hasKey("business")) {
+            return null;
+        }
         List<Business> businesses = new ArrayList<>();
         List<String> keys = new ArrayList<>(util.hmget("business").keySet());
         for (String key : keys) {
@@ -65,6 +74,9 @@ public class Business_Dao_impl implements Business_Dao {
     //todo 获取各业务数目
     @Override
     public String getBusNumByEachType() {
+        if (!util.hasKey("business")) {
+            return null;
+        }
         Map<String, Integer> busNumByEachType = new HashMap<>();
         List<String> keys = new ArrayList<>(util.hmget("business").keySet());
         for (String key : keys) {
@@ -77,6 +89,9 @@ public class Business_Dao_impl implements Business_Dao {
 
     @Override
     public String getBusNum() {
+        if (!util.hasKey("business")) {
+            return null;
+        }
        return String.valueOf(util.hmget("business").keySet().size());
     }
 }

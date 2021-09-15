@@ -15,6 +15,9 @@ public class Node_Dao_impl implements Node_Dao {
     Util util = Util.getInstance();
     @Override
     public List<Node> getAll() {
+        if (!util.hasKey("node:Controller") && !util.hasKey("node:Switch") && !util.hasKey("node:Host")) {
+            return null;
+        }
         List<Node> nodes = new ArrayList<>();
         List<String> c_keys = new ArrayList<>(util.hmget("node:Controller").keySet()); //controller表里的item集合作为键集合
         for (String key : c_keys) {

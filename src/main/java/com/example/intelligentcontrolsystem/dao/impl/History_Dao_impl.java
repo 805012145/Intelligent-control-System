@@ -1,7 +1,6 @@
 package com.example.intelligentcontrolsystem.dao.impl;
 
 import com.example.intelligentcontrolsystem.dao.History_para_Dao;
-import com.example.intelligentcontrolsystem.entity.Controller;
 import com.example.intelligentcontrolsystem.entity.History_para;
 import com.example.intelligentcontrolsystem.service.Business_Ser;
 import com.example.intelligentcontrolsystem.util.Util;
@@ -20,6 +19,9 @@ public class History_Dao_impl implements History_para_Dao {
     Business_Ser business_ser;
     @Override
     public List<History_para> getAllHistoryParam() {
+        if (!util.hasKey("history_para")) {
+            return null;
+        }
         List<String> keys = new ArrayList<>(util.hmget("history_para").keySet()); //controller表里的item集合作为键集合
         List<History_para> history_paras = new ArrayList<>();
         for (String key : keys) {

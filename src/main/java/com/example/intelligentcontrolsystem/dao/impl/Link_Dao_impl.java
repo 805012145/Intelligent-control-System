@@ -15,11 +15,16 @@ public class Link_Dao_impl implements Link_Dao {
     Util util = Util.getInstance();
     @Override
     public List<Link> getAll() {
+        if (!util.hasKey("link")) {
+            return null;
+        }
         List<String> keys = new ArrayList<>(util.hmget("link").keySet());
         List<Link> links = new ArrayList<>();
         for (String key : keys) {
             Link link = new Gson().fromJson(util.hget("link", key), new TypeToken<Link>() {}.getType());
-            link.setId(key);
+            if (key != null) {
+                link.setId(key);
+            }
             links.add(link);
         }
         return links;
@@ -27,6 +32,9 @@ public class Link_Dao_impl implements Link_Dao {
 
     @Override
     public String getBWInfoOfAllType() {
+        if (!util.hasKey("link")) {
+            return null;
+        }
         long used_BW1 = 0;
         long remain1 = 0;
 
@@ -79,7 +87,9 @@ public class Link_Dao_impl implements Link_Dao {
 
     @Override
     public String getBWConOfAllLinks() {
-
+        if (!util.hasKey("link")) {
+            return null;
+        }
         Map<String, List<LinkEntity>> pairlinksMap = new HashMap<>();
         List<String> keys = new ArrayList<>(util.hmget("link").keySet());
         for (String key : keys) {
@@ -94,8 +104,6 @@ public class Link_Dao_impl implements Link_Dao {
         }
         return new Gson().toJson(pairlinksMap);
     }
-
-
 
     public static class LinkEntity {
         private String score;

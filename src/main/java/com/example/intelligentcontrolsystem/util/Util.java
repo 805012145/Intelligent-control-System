@@ -4,13 +4,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ScanResult;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 @Component
@@ -18,30 +13,14 @@ public final class Util {
 
     private final Jedis jedis;
 
+    private String ip = "10.170.10.107";
+
+    private int port = 3232;
+
     private static final Util instance = new Util();
 
-    Properties pros = new Properties();
-
-    FileInputStream fis;
-
-    {
-        try {
-            fis = new FileInputStream("/home/wqy/Intelligent-control-Sys/src/main/resources/application.properties");
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     private Util(){
-        try {
-            pros.load(fis);
-            String host = pros.getProperty("spring.redis.host");
-            System.out.println("host = " + host);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        jedis = new Jedis("localhost");
+        jedis = new Jedis(ip, port);
     }
 
     /**
@@ -52,7 +31,15 @@ public final class Util {
         return instance;
     }
 
-    // =============================common============================
+    public String getIp() {
+        return ip;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    // =============================common============================ //
     /**
      * 指定缓存失效时间
      * @param key  键
@@ -79,7 +66,6 @@ public final class Util {
         return jedis.ttl(key);
     }
 
-
     /**
      * 判断key是否存在
      * @param key 键
@@ -94,10 +80,9 @@ public final class Util {
         }
     }
 
-
     /**
      * 删除缓存
-     * @param key 可以传一个值 或多个
+     * @param key 可以传一个值或多个
      */
     @SuppressWarnings("unchecked")
     public void del(String... key) {
@@ -209,7 +194,11 @@ public final class Util {
      * @return 对应的多个键值
      */
     public Map<String, String> hmget(String key) {
-        return jedis.hgetAll(key);
+        if (key!=null) {
+            return jedis.hgetAll(key);
+        }else {
+            return null;
+        }
     }
 
     public List<String> hvals(String key) {
