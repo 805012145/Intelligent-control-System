@@ -13,14 +13,14 @@ public final class Util {
 
     private final Jedis jedis;
 
-    private String ip = "10.170.10.107";
+    private String ip = "127.0.0.1";
 
     private int port = 3232;
 
     private static final Util instance = new Util();
 
     private Util(){
-        jedis = new Jedis(ip, port);
+        jedis = new Jedis(ip);
     }
 
     /**

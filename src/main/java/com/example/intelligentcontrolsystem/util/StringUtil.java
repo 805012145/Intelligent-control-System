@@ -35,47 +35,38 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-
-//        List<Date> dates = new ArrayList<>();
-//        String beginTime = "2018-07-29 12:26:32";
-//        String endTime = "2018-07-30 12:26:32";
-//        String otherTime = "2018-07-30 12:26:32";
-//        DateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        try {
-//            Date date1 = dFormat.parse(beginTime);
-//            dates.add(date1);
-//            Date date3 = dFormat.parse(otherTime);
-//            dates.add(date3);
-//            Date date2 = dFormat.parse(endTime);
-//            dates.add(date2);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        dates.sort(Comparator.comparing(Date::getTime).reversed());
-//        for (int i = 1; i < dates.size(); i++) {
-//            if (dates.get(i).equals(dates.get(0))) {
-//                System.out.println(dates.get(i));
-//            }
-//        }
         Util util = Util.getInstance();
-        Map<String, List<Link_Dao_impl.LinkEntity>> pairlinksMap = new HashMap<>();
-        List<String> keys = new ArrayList<>(util.hmget("link").keySet());
-        for (String key : keys) {
-            Link link = new Gson().fromJson(util.hget("link", key), new TypeToken<Link>() {}.getType());
-            link.setId(key);
-            SrcDstPair srcDstPair = new SrcDstPair(link.getSrc(), link.getDst());
-            String kk = new Gson().toJson(srcDstPair.getPair());
-            pairlinksMap.computeIfAbsent(kk, k -> new ArrayList<>());
-            Link_Dao_impl.LinkEntity linkEntity = new Link_Dao_impl.LinkEntity(link.getScore(),link.getRemain_bandwidth(), link.getLink_type());
-            String product = srcDstPair.getSrc()+":"+srcDstPair.getDst();
-            linkEntity.setProduct(product);
-            pairlinksMap.get(kk).add(linkEntity);
-        }
-        String str = new Gson().toJson(pairlinksMap);
-        JSONObject jsonObject = JSON.parseObject(str);
-        System.out.println(jsonObject);
-        for (String k : jsonObject.keySet()) {
-            System.out.println(jsonObject.get(k));
-        }
+
+        List<List<String>> bwInfo = new ArrayList<>();
+        List<String> head = new ArrayList<>();
+        head.add("remain");
+        head.add("max");
+        bwInfo.add(head);
+        List<String> channel1 = new ArrayList<>();
+        String re1 = "10";
+        String max1 = "10";
+        channel1.add(re1);
+        channel1.add(max1);
+        bwInfo.add(channel1);
+        List<String> channel2 = new ArrayList<>();
+        String re2 = "10";
+        String max2 = "10";
+        channel2.add(re2);
+        channel2.add(max2);
+        bwInfo.add(channel2);
+        List<String> channel3 = new ArrayList<>();
+        String re3 = "10";
+        String max3 = "10";
+        channel3.add(re3);
+        channel3.add(max3);
+        bwInfo.add(channel3);
+        List<String> channel4 = new ArrayList<>();
+        String re4 = "10";
+        String max4 = "10";
+        channel4.add(re4);
+        channel4.add(max4);
+        bwInfo.add(channel4);
+        Gson bwinfo = new Gson();
+        System.out.println(bwinfo.toJson(bwInfo));
     }
 }

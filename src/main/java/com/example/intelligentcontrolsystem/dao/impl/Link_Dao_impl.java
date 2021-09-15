@@ -35,6 +35,11 @@ public class Link_Dao_impl implements Link_Dao {
         if (!util.hasKey("link")) {
             return null;
         }
+        Map<String, String> channel1 = new HashMap<>();
+        Map<String, String> channel2 = new HashMap<>();
+        Map<String, String> channel3 = new HashMap<>();
+        Map<String, String> channel4 = new HashMap<>();
+        Map<String, String> channel5 = new HashMap<>();
         long used_BW1 = 0;
         long remain1 = 0;
 
@@ -54,34 +59,46 @@ public class Link_Dao_impl implements Link_Dao {
         for (String key : keys) {
             Link link = new Gson().fromJson(util.hget("link", key), new TypeToken<Link>() {}.getType());
             link.setId(key);
-            if (link.getLink_type().equals("1")) {
-                remain1 += Long.parseLong(link.getRemain_bandwidth());
-                used_BW1 += (Long.parseLong(link.getMax_bandwidth()) - Long.parseLong(link.getRemain_bandwidth()));
-            }else if (link.getLink_type().equals("2")) {
-                remain2 += Long.parseLong(link.getRemain_bandwidth());
-                used_BW2 += (Long.parseLong(link.getMax_bandwidth()) - Long.parseLong(link.getRemain_bandwidth()));
-            }else if (link.getLink_type().equals("3")) {
-                remain3 += Long.parseLong(link.getRemain_bandwidth());
-                used_BW3 += (Long.parseLong(link.getMax_bandwidth()) - Long.parseLong(link.getRemain_bandwidth()));
-            }else if (link.getLink_type().equals("4")) {
-                remain4 += Long.parseLong(link.getRemain_bandwidth());
-                used_BW4 += (Long.parseLong(link.getMax_bandwidth()) - Long.parseLong(link.getRemain_bandwidth()));
-            }else if (link.getLink_type().equals("5")) {
-                remain5 += Long.parseLong(link.getRemain_bandwidth());
-                used_BW5 += (Long.parseLong(link.getMax_bandwidth()) - Long.parseLong(link.getRemain_bandwidth()));
+            switch (link.getLink_type()) {
+                case "1":
+                    remain1 += Long.parseLong(link.getRemain_bandwidth());
+                    used_BW1 += (Long.parseLong(link.getMax_bandwidth()) - Long.parseLong(link.getRemain_bandwidth()));
+                    break;
+                case "2":
+                    remain2 += Long.parseLong(link.getRemain_bandwidth());
+                    used_BW2 += (Long.parseLong(link.getMax_bandwidth()) - Long.parseLong(link.getRemain_bandwidth()));
+                    break;
+                case "3":
+                    remain3 += Long.parseLong(link.getRemain_bandwidth());
+                    used_BW3 += (Long.parseLong(link.getMax_bandwidth()) - Long.parseLong(link.getRemain_bandwidth()));
+                    break;
+                case "4":
+                    remain4 += Long.parseLong(link.getRemain_bandwidth());
+                    used_BW4 += (Long.parseLong(link.getMax_bandwidth()) - Long.parseLong(link.getRemain_bandwidth()));
+                    break;
+                case "5":
+                    remain5 += Long.parseLong(link.getRemain_bandwidth());
+                    used_BW5 += (Long.parseLong(link.getMax_bandwidth()) - Long.parseLong(link.getRemain_bandwidth()));
+                    break;
+                default:
+                    break;
             }
         }
-        channel.setRemain1(String.valueOf(remain1));
-        channel.setRemain2(String.valueOf(remain2));
-        channel.setRemain3(String.valueOf(remain3));
-        channel.setRemain4(String.valueOf(remain4));
-        channel.setRemain5(String.valueOf(remain5));
-        channel.setUsed_BW1(String.valueOf(used_BW1));
-        channel.setUsed_BW2(String.valueOf(used_BW2));
-        channel.setUsed_BW3(String.valueOf(used_BW3));
-        channel.setUsed_BW4(String.valueOf(used_BW4));
-        channel.setUsed_BW5(String.valueOf(used_BW5));
-
+        channel1.put("used_Bw1", String.valueOf(used_BW1));
+        channel1.put("remain1", String.valueOf(remain1));
+        channel2.put("used_Bw2", String.valueOf(used_BW2));
+        channel2.put("remain2", String.valueOf(remain2));
+        channel3.put("used_Bw3", String.valueOf(used_BW3));
+        channel3.put("remain3", String.valueOf(remain3));
+        channel4.put("used_Bw4", String.valueOf(used_BW4));
+        channel4.put("remain4", String.valueOf(remain4));
+        channel5.put("used_Bw5", String.valueOf(used_BW5));
+        channel5.put("remain5", String.valueOf(remain5));
+        channel.setChannel1(channel1);
+        channel.setChannel2(channel2);
+        channel.setChannel3(channel3);
+        channel.setChannel4(channel4);
+        channel.setChannel5(channel5);
         return new Gson().toJson(channel);
     }
 
