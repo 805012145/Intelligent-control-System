@@ -1,13 +1,10 @@
 package com.example.intelligentcontrolsystem.dao.impl;
 
 import com.example.intelligentcontrolsystem.dao.History_para_Dao;
-import com.example.intelligentcontrolsystem.entity.Business;
 import com.example.intelligentcontrolsystem.entity.History_para;
-import com.example.intelligentcontrolsystem.service.Business_Ser;
 import com.example.intelligentcontrolsystem.util.Util;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.text.SimpleDateFormat;
@@ -16,8 +13,7 @@ import java.util.*;
 @Repository
 public class History_Dao_impl implements History_para_Dao {
     Util util = Util.getInstance();
-    @Autowired
-    Business_Ser business_ser;
+
     @Override
     public String getAllHistoryParam() {
         Map<String, History_para> historyParaMap = new HashMap<>();

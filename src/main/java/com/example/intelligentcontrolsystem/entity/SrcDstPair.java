@@ -1,8 +1,5 @@
 package com.example.intelligentcontrolsystem.entity;
 
-import com.alibaba.fastjson.JSON;
-import com.google.gson.JsonObject;
-
 import java.util.Objects;
 
 public class SrcDstPair {

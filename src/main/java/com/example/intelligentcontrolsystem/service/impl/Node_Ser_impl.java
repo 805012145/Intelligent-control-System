@@ -10,9 +10,13 @@ import java.util.List;
 
 @Service
 public class Node_Ser_impl implements Node_Ser {
+    private Node_Dao node_dao;
 
     @Autowired
-    Node_Dao node_dao;
+    public void setNode_dao(Node_Dao node_dao) {
+        this.node_dao = node_dao;
+    }
+
     @Override
     public List<Node> getAll() {
         return node_dao.getAll();

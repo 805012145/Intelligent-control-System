@@ -11,8 +11,12 @@ import java.util.List;
 @Service
 public class History_Ser_impl implements History_para_Ser {
 
+    private History_para_Dao history_para_dao;
+
     @Autowired
-    History_para_Dao history_para_dao;
+    public void setHistory_para_dao(History_para_Dao history_para_dao) {
+        this.history_para_dao = history_para_dao;
+    }
 
     @Override
     public String getAllHistoryParam() {

@@ -10,8 +10,13 @@ import java.util.List;
 
 @Service
 public class Link_Ser_impl implements Link_Ser {
+
+    private Link_Dao link_dao;
+
     @Autowired
-    Link_Dao link_dao;
+    public void setLink_dao(Link_Dao link_dao) {
+        this.link_dao = link_dao;
+    }
 
     @Override
     public List<Link> getAll() {

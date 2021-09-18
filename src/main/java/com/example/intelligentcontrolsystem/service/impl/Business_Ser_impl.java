@@ -11,8 +11,12 @@ import java.util.List;
 @Service
 public class Business_Ser_impl implements Business_Ser {
 
+    private Business_Dao business_dao;
+
     @Autowired
-    Business_Dao business_dao;
+    public void setBusiness_dao(Business_Dao business_dao) {
+        this.business_dao = business_dao;
+    }
 
     @Override
     public List<Business> getBusInfoBySrcId(String id) {
