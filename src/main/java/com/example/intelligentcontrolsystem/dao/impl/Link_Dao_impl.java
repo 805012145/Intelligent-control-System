@@ -15,7 +15,7 @@ public class Link_Dao_impl implements Link_Dao {
     Util util = Util.getInstance();
     @Override
     public List<Link> getAll() {
-        if (!util.hasKey("link")) {
+        if (util.keys("link").size() == 0) {
             return null;
         }
         List<String> keys = new ArrayList<>(util.hmget("link").keySet());
@@ -32,7 +32,7 @@ public class Link_Dao_impl implements Link_Dao {
 
     @Override
     public String getBWInfoOfAllType() {
-        if (!util.hasKey("link")) {
+        if (util.keys("link").size() == 0) {
             return null;
         }
         Map<String, String> channel1 = new HashMap<>();
@@ -104,7 +104,7 @@ public class Link_Dao_impl implements Link_Dao {
 
     @Override
     public String getBWConOfAllLinks() {
-        if (!util.hasKey("link")) {
+        if (util.keys("link").size() == 0) {
             return null;
         }
         Map<String, List<LinkEntity>> pairlinksMap = new HashMap<>();
@@ -178,7 +178,8 @@ public class Link_Dao_impl implements Link_Dao {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             LinkEntity that = (LinkEntity) o;
-            return Objects.equals(score, that.score) && Objects.equals(amount, that.amount) && Objects.equals(type, that.type) && Objects.equals(product, that.product);
+            return Objects.equals(score, that.score) && Objects.equals(amount, that.amount)
+                    && Objects.equals(type, that.type) && Objects.equals(product, that.product);
         }
 
         @Override

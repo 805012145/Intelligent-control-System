@@ -15,7 +15,7 @@ public class Node_Dao_impl implements Node_Dao {
     Util util = Util.getInstance();
     @Override
     public List<Node> getAll() {
-        if (!util.hasKey("node:Controller") && !util.hasKey("node:Switch") && !util.hasKey("node:Host")) {
+        if(util.keys("node:*").size() == 0) {
             return null;
         }
         List<Node> nodes = new ArrayList<>();
@@ -31,7 +31,6 @@ public class Node_Dao_impl implements Node_Dao {
             aswitch.setId(key);
             nodes.add(aswitch);
         }
-
         List<String> h_keys = new ArrayList<>(util.hmget("node:Host").keySet()); //Host表里的item集合作为键集合
         for (String key : h_keys) {
             Host host = new Gson().fromJson(util.hget("node:Host", key), new TypeToken<Host>() {}.getType());

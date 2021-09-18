@@ -14,6 +14,7 @@ public class BandWidth_Con {
 
     private Link_Ser link_ser;
 
+    //推荐使用构造器注入方式，属性注入方式可能会出现NullPointerException
     @Autowired
     public void setLink_ser(Link_Ser link_ser) {
         this.link_ser = link_ser;

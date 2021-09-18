@@ -15,7 +15,7 @@ public class Business_Dao_impl implements Business_Dao {
     Util util = Util.getInstance();
     @Override
     public List<Business> getBusInfoBySrcId(String id) {
-        if (!util.hasKey("business")) {
+        if (util.keys("business").size() == 0) {
             return null;
         }
         List<Business> businesses = new ArrayList<>();
@@ -32,7 +32,7 @@ public class Business_Dao_impl implements Business_Dao {
 
     @Override
     public List<Business> getBusInfoByParam(String src, String src_port, String dst, String dst_port, String link_type) {
-        if (!util.hasKey("business")) {
+        if (util.keys("business").size() == 0) {
             return null;
         }
         List<Business> businesses = new ArrayList<>();
@@ -58,7 +58,7 @@ public class Business_Dao_impl implements Business_Dao {
 
     @Override
     public List<Business> getBusInfo() {
-        if (!util.hasKey("business")) {
+        if (util.keys("business").size() == 0) {
             return null;
         }
         List<Business> businesses = new ArrayList<>();
@@ -74,7 +74,7 @@ public class Business_Dao_impl implements Business_Dao {
     //todo 获取各业务数目
     @Override
     public String getBusNumByEachType() {
-        if (!util.hasKey("business")) {
+        if (util.keys("business").size() == 0) {
             return null;
         }
         Map<String, Integer> busNumByEachType = new HashMap<>();
@@ -89,7 +89,7 @@ public class Business_Dao_impl implements Business_Dao {
 
     @Override
     public String getBusNum() {
-        if (!util.hasKey("business")) {
+        if (util.keys("business").size() == 0) {
             return null;
         }
        return String.valueOf(util.hmget("business").keySet().size());
