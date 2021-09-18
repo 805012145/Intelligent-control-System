@@ -19,8 +19,10 @@ public class StringUtil {
         String str2 = str1.replace('}', ' ');
         String str3 = str2.replace('[',' ');
         String str4 = str3.replace(']', ' ');
-        String str5 = str4.replaceAll(" ", "");
-        return str5.split(",");
+        String str5 = str4.replace('(', ' ');
+        String str6 = str5.replace(')', ' ');
+        String str7 = str6.replaceAll(" ", "");
+        return str7.split(",");
     }
 
     public static boolean hasStr(String src, String dst, String route) {
@@ -67,6 +69,7 @@ public class StringUtil {
         channel4.add(max4);
         bwInfo.add(channel4);
         Gson bwinfo = new Gson();
-        System.out.println(bwinfo.toJson(bwInfo));
+        Date date = new Date();
+        System.out.println(new Gson().toJson(date));
     }
 }

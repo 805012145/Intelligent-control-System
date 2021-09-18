@@ -7,26 +7,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class Topo_Con {
 
-    @Autowired
     private Node_Ser node_ser;
-
-    @Autowired
     private Link_Ser link_ser;
+    private Business_Ser business_ser;
 
     @Autowired
-    private Business_Ser business_ser;
+    public void setNode_ser(Node_Ser node_ser) {
+        this.node_ser = node_ser;
+    }
+    @Autowired
+    public void setLink_ser(Link_Ser link_ser) {
+        this.link_ser = link_ser;
+    }
+    @Autowired
+    public void setBusiness_ser(Business_Ser business_ser) {
+        this.business_ser = business_ser;
+    }
 
     /**
      * 拓扑数据展示
      * @return
      */
 
-    @RequestMapping(value = "/topodata", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/topodata", method = RequestMethod.GET)
     @ResponseBody
     public String topodata() {
         TopoEntity topoEntity = new TopoEntity();
@@ -47,7 +57,9 @@ public class Topo_Con {
     public String get_bus_by_id(@PathVariable("id") String id) {
         System.out.println(id);
         List<Business> businesses = business_ser.getBusInfoBySrcId(id);
-        return new Gson().toJson(businesses);
+        Map<String, List<Business>> map = new HashMap<>();
+        map.put("business", businesses);
+        return new Gson().toJson(map);
     }
 
     /**
@@ -64,8 +76,9 @@ public class Topo_Con {
     public String get_bus_by_link(@PathVariable("src") String src, @PathVariable("src_port") String src_port,
                                   @PathVariable("dst") String dst, @PathVariable("dst_port") String dst_port,
                                   @PathVariable("link_type") String link_type) {
-        System.out.println(src +" "+ src_port +" "+ dst +" "+ dst_port +" "+ link_type);
         List<Business> businesses = business_ser.getBusInfoByParam(src, src_port, dst, dst_port, link_type);
-        return new Gson().toJson(businesses);
+        Map<String, List<Business>> map = new HashMap<>();
+        map.put("business", businesses);
+        return new Gson().toJson(map);
     }
 }

@@ -20,7 +20,7 @@ public final class Util {
     private static final Util instance = new Util();
 
     private Util(){
-        jedis = new Jedis(ip);
+        jedis = new Jedis("127.0.0.1");
     }
 
     /**

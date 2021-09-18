@@ -6,6 +6,8 @@ import com.example.intelligentcontrolsystem.util.Util;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+
 @Repository
 public class Test_Dao_impl implements Test_Dao {
 
@@ -13,6 +15,7 @@ public class Test_Dao_impl implements Test_Dao {
     public String test() throws Exception {
         Util util = Util.getInstance();
         if(util.getIp().equals("127.0.0.1")) {
+            Date date = new Date();
             History_para history_para = new History_para("1", "10", "10", "10", "5");
             Business business = new Business("1", "2", "[1,2,3]", "[1,2]", "[10,10]", "5", "10", "1");
             Link link = new Link("1", "1", "2", "1", "1", "1000", "1000", "0", "0", "0");
@@ -37,7 +40,7 @@ public class Test_Dao_impl implements Test_Dao {
             util.hset("node:Switch", "002", new Gson().toJson(aswitch2));
             util.hset("node:Host", "001", new Gson().toJson(host1));
             util.hset("node:Host", "002", new Gson().toJson(host2));
-            util.hset("history_para", "001", new Gson().toJson(history_para));
+            util.hset("history_para", date.toString(), new Gson().toJson(history_para));
             util.hset("business", "001", new Gson().toJson(business));
         }
         return null;

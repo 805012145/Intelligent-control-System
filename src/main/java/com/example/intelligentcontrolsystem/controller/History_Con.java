@@ -9,13 +9,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class History_Con {
 
-    @Autowired
     private History_para_Ser history_para_ser;
+
+    @Autowired
+    public void setHistory_para_ser(History_para_Ser history_para_ser) {
+        this.history_para_ser = history_para_ser;
+    }
 
     /**
      * 历史信息展示
@@ -24,7 +30,6 @@ public class History_Con {
     @RequestMapping(value = "/history/historydata", method = RequestMethod.GET)
     @ResponseBody
     public String historyData() {
-        List<History_para> history_paras = history_para_ser.getAllHistoryParam();
-        return new Gson().toJson(history_paras);
+        return history_para_ser.getAllHistoryParam();
     }
 }

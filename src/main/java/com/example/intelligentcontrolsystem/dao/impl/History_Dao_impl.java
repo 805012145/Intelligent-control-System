@@ -1,6 +1,7 @@
 package com.example.intelligentcontrolsystem.dao.impl;
 
 import com.example.intelligentcontrolsystem.dao.History_para_Dao;
+import com.example.intelligentcontrolsystem.entity.Business;
 import com.example.intelligentcontrolsystem.entity.History_para;
 import com.example.intelligentcontrolsystem.service.Business_Ser;
 import com.example.intelligentcontrolsystem.util.Util;
@@ -9,8 +10,8 @@ import com.google.gson.reflect.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Repository
 public class History_Dao_impl implements History_para_Dao {
@@ -18,19 +19,22 @@ public class History_Dao_impl implements History_para_Dao {
     @Autowired
     Business_Ser business_ser;
     @Override
-    public List<History_para> getAllHistoryParam() {
-        if (!util.hasKey("history_para")) {
+    public String getAllHistoryParam() {
+        Map<String, History_para> historyParaMap = new HashMap<>();
+        int size = util.keys("history_para*").size();
+        if (size == 0) {
             return null;
         }
-        List<String> keys = new ArrayList<>(util.hmget("history_para").keySet()); //controller表里的item集合作为键集合
-        List<History_para> history_paras = new ArrayList<>();
+        List<String> keys = new ArrayList<>(util.keys("history_para*")) ;
         for (String key : keys) {
-            History_para history_para = new Gson().fromJson(util.hget("history_para", key), new TypeToken<History_para>() {}.getType());
-            String businessnum = business_ser.getBusNum();
-            history_para.setBusiness_sum(businessnum);
-            history_para.setId(key);
-            history_paras.add(history_para);
+            List<String> items = new ArrayList<>(util.hmget(key).keySet());
+            History_para history_para = new Gson().fromJson(util.hget(key, items.get(items.size() - 1)), new TypeToken<History_para>() {}.getType());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date(items.get(items.size() - 1));
+            String id = sdf.format(date);
+            history_para.setId(id);
+            historyParaMap.put(key, history_para);
         }
-        return history_paras;
+        return new Gson().toJson(historyParaMap);
     }
 }

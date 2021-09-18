@@ -1,9 +1,7 @@
 package com.example.intelligentcontrolsystem.controller;
 
 import com.example.intelligentcontrolsystem.entity.Business;
-import com.example.intelligentcontrolsystem.entity.Link;
 import com.example.intelligentcontrolsystem.entity.Node;
-import com.example.intelligentcontrolsystem.entity.TopoEntity;
 import com.example.intelligentcontrolsystem.service.Business_Ser;
 import com.example.intelligentcontrolsystem.service.Node_Ser;
 import com.google.gson.Gson;
@@ -13,16 +11,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class Business_Con {
 
-    @Autowired
     private Business_Ser business_ser;
+    private Node_Ser node_ser;
 
     @Autowired
-    private Node_Ser node_ser;
+    public void setBusiness_ser(Business_Ser business_ser) {
+        this.business_ser = business_ser;
+    }
+    @Autowired
+    public void setNode_ser(Node_Ser node_ser) {
+        this.node_ser = node_ser;
+    }
 
     /**
      * 业务流量信息表格化展示
@@ -43,7 +49,9 @@ public class Business_Con {
     @ResponseBody
     public String getNodeData() {
         List<Node> nodes = node_ser.getAll();
-        return new Gson().toJson(nodes);
+        Map<String, List<Node>> map = new HashMap<>();
+        map.put("nodes", nodes);
+        return new Gson().toJson(map);
     }
 
     /**

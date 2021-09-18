@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class Test_Con {
-    @Autowired
+
     private Test_Ser test_ser;
+    @Autowired
+    public void setTest_ser(Test_Ser test_ser) {
+        this.test_ser = test_ser;
+    }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     @ResponseBody

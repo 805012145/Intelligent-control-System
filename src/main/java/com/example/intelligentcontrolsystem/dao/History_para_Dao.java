@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface History_para_Dao {
 
-    List<History_para> getAllHistoryParam();
+    String getAllHistoryParam();
 }

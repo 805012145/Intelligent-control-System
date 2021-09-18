@@ -15,7 +15,7 @@ public class History_Ser_impl implements History_para_Ser {
     History_para_Dao history_para_dao;
 
     @Override
-    public List<History_para> getAllHistoryParam() {
+    public String getAllHistoryParam() {
         return history_para_dao.getAllHistoryParam();
     }
 }

@@ -84,16 +84,16 @@ public class Link_Dao_impl implements Link_Dao {
                     break;
             }
         }
-        channel1.put("used_Bw1", String.valueOf(used_BW1));
-        channel1.put("remain1", String.valueOf(remain1));
-        channel2.put("used_Bw2", String.valueOf(used_BW2));
-        channel2.put("remain2", String.valueOf(remain2));
-        channel3.put("used_Bw3", String.valueOf(used_BW3));
-        channel3.put("remain3", String.valueOf(remain3));
-        channel4.put("used_Bw4", String.valueOf(used_BW4));
-        channel4.put("remain4", String.valueOf(remain4));
-        channel5.put("used_Bw5", String.valueOf(used_BW5));
-        channel5.put("remain5", String.valueOf(remain5));
+        channel1.put("used_Bw", String.valueOf(used_BW1));
+        channel1.put("remain", String.valueOf(remain1));
+        channel2.put("used_Bw", String.valueOf(used_BW2));
+        channel2.put("remain", String.valueOf(remain2));
+        channel3.put("used_Bw", String.valueOf(used_BW3));
+        channel3.put("remain", String.valueOf(remain3));
+        channel4.put("used_Bw", String.valueOf(used_BW4));
+        channel4.put("remain", String.valueOf(remain4));
+        channel5.put("used_Bw", String.valueOf(used_BW5));
+        channel5.put("remain", String.valueOf(remain5));
         channel.setChannel1(channel1);
         channel.setChannel2(channel2);
         channel.setChannel3(channel3);

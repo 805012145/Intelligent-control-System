@@ -1,7 +1,6 @@
 package com.example.intelligentcontrolsystem.controller;
 
 
-import com.example.intelligentcontrolsystem.service.Business_Ser;
 import com.example.intelligentcontrolsystem.service.Link_Ser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,11 +12,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class BandWidth_Con {
 
-    @Autowired
-    private Business_Ser business_ser;
+    private Link_Ser link_ser;
 
     @Autowired
-    private Link_Ser link_ser;
+    public void setLink_ser(Link_Ser link_ser) {
+        this.link_ser = link_ser;
+    }
 
     /**
      * 各信道总带宽占用
