@@ -1,6 +1,5 @@
 package com.example.intelligentcontrolsystem.controller;
 
-
 import com.example.intelligentcontrolsystem.service.Link_Ser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

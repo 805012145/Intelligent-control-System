@@ -37,39 +37,7 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-        Util util = Util.getInstance();
-
-        List<List<String>> bwInfo = new ArrayList<>();
-        List<String> head = new ArrayList<>();
-        head.add("remain");
-        head.add("max");
-        bwInfo.add(head);
-        List<String> channel1 = new ArrayList<>();
-        String re1 = "10";
-        String max1 = "10";
-        channel1.add(re1);
-        channel1.add(max1);
-        bwInfo.add(channel1);
-        List<String> channel2 = new ArrayList<>();
-        String re2 = "10";
-        String max2 = "10";
-        channel2.add(re2);
-        channel2.add(max2);
-        bwInfo.add(channel2);
-        List<String> channel3 = new ArrayList<>();
-        String re3 = "10";
-        String max3 = "10";
-        channel3.add(re3);
-        channel3.add(max3);
-        bwInfo.add(channel3);
-        List<String> channel4 = new ArrayList<>();
-        String re4 = "10";
-        String max4 = "10";
-        channel4.add(re4);
-        channel4.add(max4);
-        bwInfo.add(channel4);
-        Gson bwinfo = new Gson();
-        Date date = new Date();
-        System.out.println(new Gson().toJson(date));
+        String str = "100.01";
+        System.out.println(Double.parseDouble(str));
     }
 }

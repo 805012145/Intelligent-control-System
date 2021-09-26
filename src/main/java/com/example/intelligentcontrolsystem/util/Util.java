@@ -11,24 +11,19 @@ import java.util.Set;
 @Component
 public final class Util {
 
-    private final Jedis jedis;
+    private Jedis jedis;
 
-    private String ip = "127.0.0.1";
+    private String ip = "192.168.0.107";
 
     private int port = 3232;
 
-    private static final Util instance = new Util();
 
-    private Util(){
-        jedis = new Jedis("127.0.0.1");
+    public Util(){
+        jedis = new Jedis(ip, port);
     }
 
-    /**
-     * 单例模式
-     * @return
-     */
-    public static Util getInstance(){
-        return instance;
+    public void UtilClose() {
+        jedis.close();
     }
 
     public String getIp() {

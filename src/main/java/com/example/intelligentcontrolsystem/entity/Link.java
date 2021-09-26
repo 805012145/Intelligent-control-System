@@ -10,7 +10,7 @@ public class Link {
 
     private String dst_port;
 
-    private String link_type;
+    private String type;
 
     private String remain_bandwidth;
 
@@ -24,13 +24,13 @@ public class Link {
 
     private String id;
 
-    public Link(String src, String src_port, String dst, String dst_port, String link_type,
+    public Link(String src, String src_port, String dst, String dst_port, String type,
                 String remain_bandwidth, String max_bandwidth, String score, String delay, String drop) {
         this.src = src;
         this.src_port = src_port;
         this.dst = dst;
         this.dst_port = dst_port;
-        this.link_type = link_type;
+        this.type = type;
         this.remain_bandwidth = remain_bandwidth;
         this.max_bandwidth = max_bandwidth;
         this.score = score;
@@ -70,12 +70,12 @@ public class Link {
         this.dst_port = dst_port;
     }
 
-    public String getLink_type() {
-        return link_type;
+    public String gettype() {
+        return type;
     }
 
-    public void setLink_type(String link_type) {
-        this.link_type = link_type;
+    public void settype(String type) {
+        this.type = type;
     }
 
     public String getRemain_bandwidth() {

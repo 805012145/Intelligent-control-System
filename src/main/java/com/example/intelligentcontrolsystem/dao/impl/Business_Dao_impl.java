@@ -12,9 +12,10 @@ import java.util.*;
 
 @Repository
 public class Business_Dao_impl implements Business_Dao {
-    Util util = Util.getInstance();
+
     @Override
     public List<Business> getBusInfoBySrcId(String id) {
+        Util util = new Util();
         if (util.keys("business").size() == 0) {
             return null;
         }
@@ -27,11 +28,13 @@ public class Business_Dao_impl implements Business_Dao {
                 businesses.add(business);
             }
         }
+        util.UtilClose();
         return businesses;
     }
 
     @Override
     public List<Business> getBusInfoByParam(String src, String src_port, String dst, String dst_port, String link_type) {
+        Util util = new Util();
         if (util.keys("business").size() == 0) {
             return null;
         }
@@ -53,11 +56,13 @@ public class Business_Dao_impl implements Business_Dao {
                 }
             }
         }
+        util.UtilClose();
         return businesses;
     }
 
     @Override
     public List<Business> getBusInfo() {
+        Util util = new Util();
         if (util.keys("business").size() == 0) {
             return null;
         }
@@ -68,12 +73,14 @@ public class Business_Dao_impl implements Business_Dao {
             business.setId(key);
             businesses.add(business);
         }
+        util.UtilClose();
         return businesses;
     }
 
     //todo 获取各业务数目
     @Override
     public String getBusNumByEachType() {
+        Util util = new Util();
         if (util.keys("business").size() == 0) {
             return null;
         }
@@ -84,14 +91,17 @@ public class Business_Dao_impl implements Business_Dao {
             business.setId(key);
             busNumByEachType.merge(business.getType(), 1, Integer::sum);
         }
+        util.UtilClose();
         return new Gson().toJson(busNumByEachType);
     }
 
     @Override
     public String getBusNum() {
+        Util util = new Util();
         if (util.keys("business").size() == 0) {
             return null;
         }
+        util.UtilClose();
        return String.valueOf(util.hmget("business").keySet().size());
     }
 }

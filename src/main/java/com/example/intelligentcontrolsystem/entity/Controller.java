@@ -1,9 +1,9 @@
 package com.example.intelligentcontrolsystem.entity;
 
 public class Controller extends Node{
-    public Controller(String name, String symbolsize, String x, String y,
-                      String value, String category, String field) {
-        super(name, symbolsize, x, y, value, category, field);
+    public Controller(String name, String symbolSize, Double x, Double y,
+                      Integer value, Integer category, String field) {
+        super(name, symbolSize, x, y, value, category, field);
     }
 
     @Override
@@ -11,7 +11,7 @@ public class Controller extends Node{
         return "Controller{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", symbolsize='" + symbolsize + '\'' +
+                ", symbolSize='" + symbolSize + '\'' +
                 ", x='" + x + '\'' +
                 ", y='" + y + '\'' +
                 ", value='" + value + '\'' +

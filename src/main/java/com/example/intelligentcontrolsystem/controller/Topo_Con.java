@@ -40,10 +40,14 @@ public class Topo_Con {
     @ResponseBody
     public String topodata() {
         TopoEntity topoEntity = new TopoEntity();
-        List<Link> links = link_ser.getAll();
-        List<Node> nodes = node_ser.getAll();
-        topoEntity.setNodes(nodes);
-        topoEntity.setLinks(links);
+        try {
+            List<Link> links = link_ser.getAll();
+            List<Node> nodes = node_ser.getAll();
+            topoEntity.setNodes(nodes);
+            topoEntity.setLinks(links);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return new Gson().toJson(topoEntity);
     }
 
@@ -55,7 +59,6 @@ public class Topo_Con {
     @RequestMapping(value = "/topo/business/{id}", method = RequestMethod.GET)
     @ResponseBody
     public String get_bus_by_id(@PathVariable("id") String id) {
-        System.out.println(id);
         List<Business> businesses = business_ser.getBusInfoBySrcId(id);
         Map<String, List<Business>> map = new HashMap<>();
         map.put("business", businesses);

@@ -1,9 +1,9 @@
 package com.example.intelligentcontrolsystem.entity;
 
 public class Switch extends Node{
-    public Switch(String name, String symbolsize, String x, String y,
-                  String value, String category, String field) {
-        super(name, symbolsize, x, y, value, category, field);
+    public Switch(String name, String symbolSize, Double x, Double y,
+                  Integer value, Integer category, String field) {
+        super(name, symbolSize, x, y, value, category, field);
     }
 
     @Override
@@ -11,7 +11,7 @@ public class Switch extends Node{
         return "Switch{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", symbolsize='" + symbolsize + '\'' +
+                ", symbolSize='" + symbolSize + '\'' +
                 ", x='" + x + '\'' +
                 ", y='" + y + '\'' +
                 ", value='" + value + '\'' +

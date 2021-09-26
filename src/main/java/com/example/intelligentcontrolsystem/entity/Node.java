@@ -7,25 +7,35 @@ public class Node {
 
     public String name;
 
-    public String symbolsize;
+    public String symbolSize;
 
-    public String x;
+    public Double x;
 
-    public String y;
+    public Double y;
 
-    public String value;
+    public Integer value;
 
-    public String category;
+    public Integer category;
 
     public String field;
+
+    public String symbol;
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
 
     public Node() {
     }
 
-    public Node(String name, String symbolsize, String x, String y,
-                String value, String category, String field) {
+    public Node(String name, String symbolSize, Double x, Double y,
+                Integer value, Integer category, String field) {
         this.name = name;
-        this.symbolsize = symbolsize;
+        this.symbolSize = symbolSize;
         this.x = x;
         this.y = y;
         this.value = value;
@@ -49,43 +59,43 @@ public class Node {
         this.name = name;
     }
 
-    public String getSymbolsize() {
-        return symbolsize;
+    public String getSymbolSize() {
+        return symbolSize;
     }
 
-    public void setSymbolsize(String symbolsize) {
-        this.symbolsize = symbolsize;
+    public void setSymbolSize(String symbolSize) {
+        this.symbolSize = symbolSize;
     }
 
-    public String getX() {
+    public Double getX() {
         return x;
     }
 
-    public void setX(String x) {
+    public void setX(Double x) {
         this.x = x;
     }
 
-    public String getY() {
+    public Double getY() {
         return y;
     }
 
-    public void setY(String y) {
+    public void setY(Double y) {
         this.y = y;
     }
 
-    public String getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 
-    public String getCategory() {
+    public Integer getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Integer category) {
         this.category = category;
     }
 
@@ -102,25 +112,11 @@ public class Node {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Node node = (Node) o;
-        return Objects.equals(id, node.id) && Objects.equals(name, node.name) && Objects.equals(symbolsize, node.symbolsize) && Objects.equals(x, node.x) && Objects.equals(y, node.y) && Objects.equals(value, node.value) && Objects.equals(category, node.category) && Objects.equals(field, node.field);
+        return Objects.equals(id, node.id) && Objects.equals(name, node.name) && Objects.equals(symbolSize, node.symbolSize) && Objects.equals(x, node.x) && Objects.equals(y, node.y) && Objects.equals(value, node.value) && Objects.equals(category, node.category) && Objects.equals(field, node.field) && Objects.equals(symbol, node.symbol);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, symbolsize, x, y, value, category, field);
-    }
-
-    @Override
-    public String toString() {
-        return "Node{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", symbolsize='" + symbolsize + '\'' +
-                ", x='" + x + '\'' +
-                ", y='" + y + '\'' +
-                ", value='" + value + '\'' +
-                ", category='" + category + '\'' +
-                ", field='" + field + '\'' +
-                '}';
+        return Objects.hash(id, name, symbolSize, x, y, value, category, field, symbol);
     }
 }
