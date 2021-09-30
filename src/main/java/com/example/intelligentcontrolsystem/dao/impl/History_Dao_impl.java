@@ -22,20 +22,38 @@ public class History_Dao_impl implements History_para_Dao {
         if (size == 0) {
             return null;
         }
-        List<String> keys = new ArrayList<>(util.keys("history_para*")) ;
-        for (String key : keys) {
-            List<History_para> history_paras = new ArrayList<>();
-            List<String> items = new ArrayList<>(util.hmget(key).keySet());
-            for (String item : items) {
-                Date date = new Date(item);
-                String id = sdf.format(date);
-                History_para history_para = new Gson().fromJson(util.hget(key, items.get(items.size() - 1)), new TypeToken<History_para>() {}.getType());
-                history_para.setId(id);
-                history_paras.add(history_para);
+        List<String> tables = new ArrayList<>(util.keys("history_para*"));
+        List<History_para> history_paras = new ArrayList<>();
+        for (int i = 0; i < 30; i++) {
+            History_para history_para = new History_para(0,0,0,0,0, 0L);
+            List<History_para> tempList = new ArrayList<>();
+            for (String table : tables) {
+                if (util.zcard(table) - i > 0) {
+                    History_para item = new Gson().fromJson(util.zget(table, util.zcard(table) - i - 1, util.zcard(table) - i).get(0),
+                            new TypeToken<History_para>() {
+                            }.getType());
+                    tempList.add(item);
+                }
             }
-            historyParaMap.put(key, history_paras);
+            if (tempList.size() == 0) {
+                break;
+            }
+            for (History_para item : tempList) {
+                history_para.controller_sum += item.controller_sum;
+                history_para.business_sum += item.business_sum;
+                history_para.host_sum += item.host_sum;
+                history_para.link_sum += item.link_sum;
+                history_para.switch_sum += item.switch_sum;
+                history_para.throughout += item.throughout;
+            }
+            history_para.controller_sum++;
+            Date date = new Date(tempList.get(0).date);
+            String id = sdf.format(date);
+            history_para.setDate(id);
+            history_paras.add(history_para);
         }
         util.UtilClose();
+        historyParaMap.put("historyPara", history_paras);
         return new Gson().toJson(historyParaMap);
     }
 }

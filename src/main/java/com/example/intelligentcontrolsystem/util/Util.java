@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ScanResult;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +15,7 @@ public final class Util {
 
     private Jedis jedis;
 
-    private String ip = "192.168.0.107";
+    private String ip = "192.168.0.109";
 
     private int port = 3232;
 
@@ -194,6 +196,18 @@ public final class Util {
         }else {
             return null;
         }
+    }
+
+    public Long zadd(String key, Double score, String member) {
+        return jedis.zadd(key, score, member);
+    }
+
+    public List<String> zget(String key, long start, long end) {
+        return new ArrayList<>(jedis.zrange(key, start, end));
+    }
+
+    public Long zcard(String key) {
+        return jedis.zcard(key);
     }
 
     public List<String> hvals(String key) {
