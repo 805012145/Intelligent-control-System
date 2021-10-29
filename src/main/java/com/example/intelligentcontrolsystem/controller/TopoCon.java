@@ -12,23 +12,23 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class Topo_Con {
+public class TopoCon {
 
-    private Node_Ser node_ser;
-    private Link_Ser link_ser;
-    private Business_Ser business_ser;
+    private NodeSer nodeSer;
+    private LinkSer linkSer;
+    private BusinessSer businessSer;
 
     @Autowired
-    public void setNode_ser(Node_Ser node_ser) {
-        this.node_ser = node_ser;
+    public void setNodeSer(NodeSer nodeSer) {
+        this.nodeSer = nodeSer;
     }
     @Autowired
-    public void setLink_ser(Link_Ser link_ser) {
-        this.link_ser = link_ser;
+    public void setLinkSer(LinkSer linkSer) {
+        this.linkSer = linkSer;
     }
     @Autowired
-    public void setBusiness_ser(Business_Ser business_ser) {
-        this.business_ser = business_ser;
+    public void setBusinessSer(BusinessSer businessSer) {
+        this.businessSer = businessSer;
     }
 
     /**
@@ -38,11 +38,11 @@ public class Topo_Con {
 
     @RequestMapping(value = "/topodata", method = RequestMethod.GET)
     @ResponseBody
-    public String topodata() {
+    public String topoData() {
         TopoEntity topoEntity = new TopoEntity();
         try {
-            List<Link> links = link_ser.getAll();
-            List<Node> nodes = node_ser.getAll();
+            List<Link> links = linkSer.getAll();
+            List<Node> nodes = nodeSer.getAll();
             topoEntity.setNodes(nodes);
             topoEntity.setLinks(links);
         }catch (Exception e) {
@@ -58,8 +58,8 @@ public class Topo_Con {
      */
     @RequestMapping(value = "/topo/business/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public String get_bus_by_id(@PathVariable("id") String id) {
-        List<Business> businesses = business_ser.getBusInfoBySrcId(id);
+    public String getBusById(@PathVariable("id") String id) {
+        List<Business> businesses = businessSer.getBusInfoBySrcId(id);
         Map<String, List<Business>> map = new HashMap<>();
         map.put("business", businesses);
         return new Gson().toJson(map);
@@ -76,12 +76,27 @@ public class Topo_Con {
      */
     @RequestMapping(value = "/topo/business/{src}/{src_port}/{dst}/{dst_port}/{link_type}", method = RequestMethod.GET)
     @ResponseBody
-    public String get_bus_by_link(@PathVariable("src") String src, @PathVariable("src_port") String src_port,
+    public String getBusByLink(@PathVariable("src") String src, @PathVariable("src_port") String src_port,
                                   @PathVariable("dst") String dst, @PathVariable("dst_port") String dst_port,
                                   @PathVariable("link_type") String link_type) {
-        List<Business> businesses = business_ser.getBusInfoByParam(src, src_port, dst, dst_port, link_type);
+        List<Business> businesses = businessSer.getBusInfoByParam(src, src_port, dst, dst_port, link_type);
         Map<String, List<Business>> map = new HashMap<>();
         map.put("business", businesses);
         return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "/topo/single", method = RequestMethod.GET)
+    @ResponseBody
+    public String getSingleTopo() {
+        TopoEntity topoEntity = new TopoEntity();
+        try {
+            List<Link> links = linkSer.getSingleScore();
+            List<Node> nodes = nodeSer.getAll();
+            topoEntity.setNodes(nodes);
+            topoEntity.setLinks(links);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new Gson().toJson(topoEntity);
     }
 }

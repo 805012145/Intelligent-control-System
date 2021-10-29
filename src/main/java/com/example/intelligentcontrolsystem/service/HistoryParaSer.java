@@ -4,6 +4,6 @@ import com.example.intelligentcontrolsystem.entity.History_para;
 
 import java.util.List;
 
-public interface History_para_Ser {
+public interface HistoryParaSer {
     String getAllHistoryParam();
 }

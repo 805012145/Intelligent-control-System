@@ -4,7 +4,7 @@ import com.example.intelligentcontrolsystem.entity.Business;
 
 import java.util.List;
 
-public interface Business_Dao {
+public interface BusinessDao {
 
     /**
      * 根据节点找业务信息
@@ -30,11 +30,16 @@ public interface Business_Dao {
      */
     List<Business> getBusInfo();
 
+
+    List<Business> getBusInfo(String algorithm);
+
     /**
      * 获取不同业务种类的业务数目
      * @return
      */
     String getBusNumByEachType();
+
+    String getBusNumByEachType(String algorithm);
 
     /**
      * 获取业务信息表中的个数

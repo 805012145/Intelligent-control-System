@@ -1,14 +1,15 @@
-package com.example.intelligentcontrolsystem.dao;
+package com.example.intelligentcontrolsystem.service;
 
 import com.example.intelligentcontrolsystem.entity.Link;
 
 import java.util.List;
 
-
-public interface Link_Dao {
+public interface LinkSer {
     List<Link> getAll();
 
     String getBWInfoOfAllType();
 
     String getBWConOfAllLinks();
+
+    List<Link> getSingleScore();
 }

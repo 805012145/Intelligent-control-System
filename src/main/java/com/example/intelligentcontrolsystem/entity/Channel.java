@@ -1,6 +1,5 @@
 package com.example.intelligentcontrolsystem.entity;
 
-import java.util.*;
 
 public class Channel {
 

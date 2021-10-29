@@ -38,6 +38,12 @@ public class Link {
         this.drop = drop;
     }
 
+    public Link(String src, String dst, String score) {
+        this.src = src;
+        this.dst = dst;
+        this.score = score;
+    }
+
     public String getSrc() {
         return src;
     }
@@ -124,5 +130,23 @@ public class Link {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public String
+    toString() {
+        return "Link{" +
+                "src='" + src + '\'' +
+                ", src_port='" + src_port + '\'' +
+                ", dst='" + dst + '\'' +
+                ", dst_port='" + dst_port + '\'' +
+                ", type='" + type + '\'' +
+                ", remain_bandwidth='" + remain_bandwidth + '\'' +
+                ", max_bandwidth='" + max_bandwidth + '\'' +
+                ", score='" + score + '\'' +
+                ", delay='" + delay + '\'' +
+                ", drop='" + drop + '\'' +
+                ", id='" + id + '\'' +
+                '}';
     }
 }

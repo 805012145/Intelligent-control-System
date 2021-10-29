@@ -15,7 +15,7 @@ public final class Util {
 
     private Jedis jedis;
 
-    private String ip = "192.168.0.109";
+    private String ip = "192.168.0.101";
 
     private int port = 3232;
 

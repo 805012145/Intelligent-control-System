@@ -1,22 +1,21 @@
 package com.example.intelligentcontrolsystem.controller;
 
-import com.example.intelligentcontrolsystem.service.Link_Ser;
+import com.example.intelligentcontrolsystem.service.LinkSer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 @Controller
-public class BandWidth_Con {
+public class BandWidthCon {
 
-    private Link_Ser link_ser;
+    private LinkSer linkSer;
 
     //推荐使用构造器注入方式，属性注入方式可能会出现NullPointerException
     @Autowired
-    public void setLink_ser(Link_Ser link_ser) {
-        this.link_ser = link_ser;
+    public void setLink_ser(LinkSer linkSer) {
+        this.linkSer = linkSer;
     }
 
     /**
@@ -26,7 +25,7 @@ public class BandWidth_Con {
     @RequestMapping(value = "/bandwidth/usage", method = RequestMethod.GET)
     @ResponseBody
     public String getBWUsage() {
-        return link_ser.getBWInfoOfAllType();
+        return linkSer.getBWInfoOfAllType();
     }
 
     //todo JSON字符串可能仍需重新设计
@@ -37,6 +36,6 @@ public class BandWidth_Con {
     @RequestMapping(value = "/bandwidth/congestion", method = RequestMethod.GET)
     @ResponseBody
     public String getBWCongestion() {
-        return link_ser.getBWConOfAllLinks();
+        return linkSer.getBWConOfAllLinks();
     }
 }

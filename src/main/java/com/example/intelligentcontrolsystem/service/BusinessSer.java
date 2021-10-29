@@ -4,7 +4,7 @@ import com.example.intelligentcontrolsystem.entity.Business;
 
 import java.util.List;
 
-public interface Business_Ser {
+public interface BusinessSer {
 
     List<Business> getBusInfoBySrcId(String id);
 
@@ -12,7 +12,11 @@ public interface Business_Ser {
 
     List<Business> getBusInfo();
 
+    List<Business> getBusInfo(String algorithm);
+
     String getBusNumByEachType();
+
+    String getBusNumByEachType(String algorithm);
 
     String getBusNum();
 }

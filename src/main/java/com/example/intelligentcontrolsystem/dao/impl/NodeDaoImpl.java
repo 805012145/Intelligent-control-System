@@ -1,6 +1,6 @@
 package com.example.intelligentcontrolsystem.dao.impl;
 
-import com.example.intelligentcontrolsystem.dao.Node_Dao;
+import com.example.intelligentcontrolsystem.dao.NodeDao;
 import com.example.intelligentcontrolsystem.entity.*;
 import com.example.intelligentcontrolsystem.util.Util;
 import com.google.gson.Gson;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class Node_Dao_impl implements Node_Dao {
+public class NodeDaoImpl implements NodeDao {
 
     @Override
     public List<Node> getAll() {

@@ -1,18 +1,5 @@
 package com.example.intelligentcontrolsystem.util;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.example.intelligentcontrolsystem.dao.impl.Link_Dao_impl;
-import com.example.intelligentcontrolsystem.entity.Link;
-import com.example.intelligentcontrolsystem.entity.SrcDstPair;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
 public class StringUtil {
     public static String[] StringToArray(String str) {
         String str1 = str.replace('{',' ');

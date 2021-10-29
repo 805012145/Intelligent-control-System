@@ -2,8 +2,8 @@ package com.example.intelligentcontrolsystem.controller;
 
 import com.example.intelligentcontrolsystem.entity.Business;
 import com.example.intelligentcontrolsystem.entity.Node;
-import com.example.intelligentcontrolsystem.service.Business_Ser;
-import com.example.intelligentcontrolsystem.service.Node_Ser;
+import com.example.intelligentcontrolsystem.service.BusinessSer;
+import com.example.intelligentcontrolsystem.service.NodeSer;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,18 +16,18 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class Business_Con {
+public class BusinessCon {
 
-    private Business_Ser business_ser;
-    private Node_Ser node_ser;
+    private BusinessSer businessSer;
+    private NodeSer nodeSer;
 
     @Autowired
-    public void setBusiness_ser(Business_Ser business_ser) {
-        this.business_ser = business_ser;
+    public void setBusinessSer(BusinessSer businessSer) {
+        this.businessSer = businessSer;
     }
     @Autowired
-    public void setNode_ser(Node_Ser node_ser) {
-        this.node_ser = node_ser;
+    public void setNodeSer(NodeSer nodeSer) {
+        this.nodeSer = nodeSer;
     }
 
     /**
@@ -37,7 +37,7 @@ public class Business_Con {
     @RequestMapping(value = "/business/businessdata", method = RequestMethod.GET)
     @ResponseBody
     public String getBusInfo() {
-        List<Business> businesses = business_ser.getBusInfo();
+        List<Business> businesses = businessSer.getBusInfo();
         return new Gson().toJson(businesses);
     }
 
@@ -48,7 +48,7 @@ public class Business_Con {
     @RequestMapping(value = "/business/nodedata", method = RequestMethod.GET)
     @ResponseBody
     public String getNodeData() {
-        List<Node> nodes = node_ser.getAll();
+        List<Node> nodes = nodeSer.getAll();
         Map<String, List<Node>> map = new HashMap<>();
         map.put("nodes", nodes);
         return new Gson().toJson(map);
@@ -61,6 +61,6 @@ public class Business_Con {
     @RequestMapping(value = "/business/businessnum", method = RequestMethod.GET)
     @ResponseBody
     public String getBusNumByEachType() {
-        return business_ser.getBusNumByEachType();
+        return businessSer.getBusNumByEachType();
     }
 }

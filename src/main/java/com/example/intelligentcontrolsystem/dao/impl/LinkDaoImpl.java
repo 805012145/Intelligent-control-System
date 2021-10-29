@@ -1,6 +1,6 @@
 package com.example.intelligentcontrolsystem.dao.impl;
 
-import com.example.intelligentcontrolsystem.dao.Link_Dao;
+import com.example.intelligentcontrolsystem.dao.LinkDao;
 import com.example.intelligentcontrolsystem.entity.*;
 import com.example.intelligentcontrolsystem.util.Util;
 import com.google.gson.Gson;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository
-public class Link_Dao_impl implements Link_Dao {
+public class LinkDaoImpl implements LinkDao {
 
     @Override
     public List<Link> getAll() {
@@ -96,9 +96,9 @@ public class Link_Dao_impl implements Link_Dao {
         if (util.keys("link").size() == 0) {
             return null;
         }
-        BandEntity bandEntity = new BandEntity();
+        TableEntity tableEntity = new TableEntity();
         List<Object[]> bwInfo = new ArrayList<>();
-        BandEntity.Data data = new BandEntity.Data();
+        TableEntity.Data data = new TableEntity.Data();
         Object[] header = {"score1", "amount1", "type1", "score2", "amount2", "type2", "score3", "amount3", "type3",
                 "score4", "amount4", "type4", "product"};
         bwInfo.add(header);
@@ -107,7 +107,9 @@ public class Link_Dao_impl implements Link_Dao {
         List<String> keys = new ArrayList<>(util.hmget("link").keySet());
         for (String key : keys) {
             Link link = new Gson().fromJson(util.hget("link", key), new TypeToken<Link>() {}.getType());
-            link.setId(key);
+            if (key != null ) {
+                link.setId(key);
+            }
             if (link.gettype().equals("5") ||link.gettype().equals("0") ) {
                 continue;
             }
@@ -116,6 +118,11 @@ public class Link_Dao_impl implements Link_Dao {
             LinkEntity linkEntity = new LinkEntity(link.getScore(),link.getRemain_bandwidth(), link.gettype());
             linkEntity.setProduct(product);
             pairlinksMap.get(product).add(linkEntity);
+            String product2 = link.getDst()+":"+link.getSrc();
+            pairlinksMap.computeIfAbsent(product2, k -> new ArrayList<>());
+            LinkEntity linkEntity2 = new LinkEntity(link.getScore(),link.getRemain_bandwidth(), link.gettype());
+            linkEntity.setProduct(product);
+            pairlinksMap.get(product2).add(linkEntity2);
         }
         for (String key : pairlinksMap.keySet()) {
             Object[] linkInfo = new Object[13];
@@ -155,9 +162,44 @@ public class Link_Dao_impl implements Link_Dao {
             bwInfo.add(linkInfo);
         }
         data.setSource(bwInfo);
-        bandEntity.setData(data);
+        tableEntity.setData(data);
         util.UtilClose();
-        return new Gson().toJson(bandEntity);
+        return new Gson().toJson(tableEntity);
+    }
+
+    @Override
+    public List<Link> getSingleScore() {
+        Util util = new Util();
+        List<Link> links = new ArrayList<>();
+        if (util.keys("link").size() == 0) {
+            return null;
+        }
+        Map<SrcDstPair, Float> singleLinkMap = new HashMap<>();
+        List<String> keys = new ArrayList<>(util.hmget("link").keySet());
+
+        for (String key : keys) {
+            Link link = new Gson().fromJson(util.hget("link", key), new TypeToken<Link>() {}.getType());
+            if (key != null) {
+                link.setId(key);
+            }
+            if (link.getScore() == null) {
+                links.add(link);
+                continue;
+            }
+            SrcDstPair srcDstPair = new SrcDstPair(link.getSrc(), link.getDst());
+            if (!singleLinkMap.containsKey(srcDstPair)) {
+                singleLinkMap.put(srcDstPair, Float.parseFloat(link.getScore()));
+            }else {
+                singleLinkMap.put(srcDstPair, (singleLinkMap.get(srcDstPair) + Float.parseFloat(link.getScore())) / 2);
+            }
+        }
+        util.UtilClose();
+
+        for (SrcDstPair pair : singleLinkMap.keySet()) {
+            Link link = new Link(pair.getSrc(), pair.getDst(), String.valueOf(singleLinkMap.get(pair)));
+            links.add(link);
+        }
+        return links;
     }
 
     public static class LinkEntity {
