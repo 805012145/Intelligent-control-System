@@ -23,7 +23,11 @@ public class LinkDaoImpl implements LinkDao {
         for (String key : keys) {
             Link link = new Gson().fromJson(util.hget("link", key), new TypeToken<Link>() {}.getType());
             if (key != null) {
-                link.setId(key);
+                try {
+                    link.setId(key);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             links.add(link);
         }

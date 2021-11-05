@@ -1,22 +1,20 @@
 package com.example.intelligentcontrolsystem.service;
 
 import com.example.intelligentcontrolsystem.entity.Business;
+import com.example.intelligentcontrolsystem.entity.PieChart;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface BusinessSer {
 
-    List<Business> getBusInfoBySrcId(String id);
+    List<Business> getBusInfoBySrcId(String id, String algorithm) throws ParseException;
 
-    List<Business> getBusInfoByParam(String src, String src_port, String dst, String dst_port, String link_type);
+    List<PieChart> getBusInfoByParam(String source, String target, String type, String algorithm) throws ParseException;
 
-    List<Business> getBusInfo();
 
-    List<Business> getBusInfo(String algorithm);
+    List<Business> getBusInfo(String algorithm) throws ParseException;
 
-    String getBusNumByEachType();
+    String getBusInfoByType(String algorithm) throws ParseException;
 
-    String getBusNumByEachType(String algorithm);
-
-    String getBusNum();
 }

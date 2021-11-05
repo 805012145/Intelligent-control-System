@@ -15,13 +15,13 @@ public final class Util {
 
     private Jedis jedis;
 
-    private String ip = "192.168.0.101";
+    private String ip = "192.168.0.104";
 
     private int port = 3232;
 
 
     public Util(){
-        jedis = new Jedis(ip, port);
+        jedis = new Jedis(ip, port, 100000);
     }
 
     public void UtilClose() {

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ public class BusinessCon {
 
     private BusinessSer businessSer;
     private NodeSer nodeSer;
+    public String algorithm = "DNN";
 
     @Autowired
     public void setBusinessSer(BusinessSer businessSer) {
@@ -36,8 +38,8 @@ public class BusinessCon {
      */
     @RequestMapping(value = "/business/businessdata", method = RequestMethod.GET)
     @ResponseBody
-    public String getBusInfo() {
-        List<Business> businesses = businessSer.getBusInfo();
+    public String getBusInfo() throws ParseException {
+        List<Business> businesses = businessSer.getBusInfo(algorithm);
         return new Gson().toJson(businesses);
     }
 
@@ -55,12 +57,12 @@ public class BusinessCon {
     }
 
     /**
-     * 各类型业务数目展示
-     * @return
+     *
      */
-    @RequestMapping(value = "/business/businessnum", method = RequestMethod.GET)
+    @RequestMapping(value = "/business/info", method = RequestMethod.GET)
     @ResponseBody
-    public String getBusNumByEachType() {
-        return businessSer.getBusNumByEachType();
+    public String getBusDelay() throws ParseException {
+        return businessSer.getBusInfoByType(algorithm);
     }
+
 }

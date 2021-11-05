@@ -2,10 +2,12 @@ package com.example.intelligentcontrolsystem.service.impl;
 
 import com.example.intelligentcontrolsystem.dao.BusinessDao;
 import com.example.intelligentcontrolsystem.entity.Business;
+import com.example.intelligentcontrolsystem.entity.PieChart;
 import com.example.intelligentcontrolsystem.service.BusinessSer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 
 @Service
@@ -19,37 +21,26 @@ public class BusinessSerImpl implements BusinessSer {
     }
 
     @Override
-    public List<Business> getBusInfoBySrcId(String id) {
-        return businessDao.getBusInfoBySrcId(id);
+    public List<Business> getBusInfoBySrcId(String id, String algorithm) throws ParseException {
+        return businessDao.getBusInfoBySrcId(id, algorithm);
     }
 
     @Override
-    public List<Business> getBusInfoByParam(String src, String src_port, String dst, String dst_port, String link_type) {
-        return businessDao.getBusInfoByParam(src, src_port, dst, dst_port, link_type);
+    public List<PieChart> getBusInfoByParam(String source, String target,
+                                            String type, String algorithm) throws ParseException {
+        return businessDao.getBusInfoByParam(source, target, type, algorithm);
     }
 
     @Override
-    public List<Business> getBusInfo() {
-        return businessDao.getBusInfo();
-    }
-
-    @Override
-    public List<Business> getBusInfo(String algorithm) {
+    public List<Business> getBusInfo(String algorithm) throws ParseException {
         return businessDao.getBusInfo(algorithm);
     }
 
-    @Override
-    public String getBusNumByEachType() {
-        return businessDao.getBusNumByEachType();
-    }
 
     @Override
-    public String getBusNumByEachType(String algorithm) {
-        return businessDao.getBusNumByEachType(algorithm);
+    public String getBusInfoByType(String algorithm) throws ParseException {
+        return businessDao.getBusInfoByType(algorithm);
     }
 
-    @Override
-    public String getBusNum() {
-        return businessDao.getBusNum();
-    }
+
 }

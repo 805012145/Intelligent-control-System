@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ public class TopoCon {
     private NodeSer nodeSer;
     private LinkSer linkSer;
     private BusinessSer businessSer;
+    public String algorithm = "DNN";
 
     @Autowired
     public void setNodeSer(NodeSer nodeSer) {
@@ -56,32 +58,31 @@ public class TopoCon {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/topo/business/{id}", method = RequestMethod.GET)
+//    @RequestMapping(value = "/topo/business/{id}", method = RequestMethod.GET)
+    @PostMapping("topo/postNodeNum")
     @ResponseBody
-    public String getBusById(@PathVariable("id") String id) {
-        List<Business> businesses = businessSer.getBusInfoBySrcId(id);
+    public String getBusById(String id) throws ParseException {
+        System.out.println(id);
+        List<Business> businesses = businessSer.getBusInfoBySrcId(id, algorithm);
         Map<String, List<Business>> map = new HashMap<>();
-        map.put("business", businesses);
+        map.put("routingtable", businesses);
         return new Gson().toJson(map);
     }
 
     /**
      * 前端返回src,dst,src_port,dst_port,link_type，查询business表中满足所有条件的最近时刻的名称，类型与占用带宽情况
-     * @param src
-     * @param src_port
-     * @param dst
-     * @param dst_port
-     * @param link_type
+     *
      * @return
      */
-    @RequestMapping(value = "/topo/business/{src}/{src_port}/{dst}/{dst_port}/{link_type}", method = RequestMethod.GET)
+//    @RequestMapping(value = "/topo/business/{src}/{src_port}/{dst}/{dst_port}/{link_type}", method = RequestMethod.GET)
+    @PostMapping("topo/postLinkState")
     @ResponseBody
-    public String getBusByLink(@PathVariable("src") String src, @PathVariable("src_port") String src_port,
-                                  @PathVariable("dst") String dst, @PathVariable("dst_port") String dst_port,
-                                  @PathVariable("link_type") String link_type) {
-        List<Business> businesses = businessSer.getBusInfoByParam(src, src_port, dst, dst_port, link_type);
-        Map<String, List<Business>> map = new HashMap<>();
-        map.put("business", businesses);
+    public String getBusByLink(String source, String target, String type) throws ParseException {
+        List<PieChart> pieCharts = businessSer.getBusInfoByParam(source, target, type, algorithm);
+        List<PieChart> rePieCharts = businessSer.getBusInfoByParam(target, source, type, algorithm);
+        pieCharts.addAll(rePieCharts);
+        Map<String, List<PieChart>> map = new HashMap<>();
+        map.put("routingtable", pieCharts);
         return new Gson().toJson(map);
     }
 

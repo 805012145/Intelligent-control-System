@@ -1,4 +1,5 @@
 package com.example.intelligentcontrolsystem.util;
+import java.text.ParseException;
 
 public class StringUtil {
     public static String[] StringToArray(String str) {
@@ -14,17 +15,27 @@ public class StringUtil {
 
     public static boolean hasStr(String src, String dst, String route) {
         String str = src+","+dst;
-        System.out.println(str);
         String str1 = route.replaceAll(" ", "");
-        System.out.println(str1);
         if (str1.contains(str)) {
             return true;
         }
         return false;
     }
 
-    public static void main(String[] args) {
-        String str = "100.01";
-        System.out.println(Double.parseDouble(str));
+    public static void main(String[] args) throws ParseException {
+//        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSSS");
+//        Date date = new Date(System.currentTimeMillis());
+//        System.out.println(formatter.format(date));
+//        Long time = formatter.parse(formatter.format(date)).getTime();
+//        Long time2 = 1635931348369L;
+//        System.out.println(time.compareTo(time2));
+//        String table = "src:10.0.0.1 srcport:1 dst:10.0.0.2 dstport:1";
+//        String[] quaternion = table.split(" ");
+//
+//        System.out.println(quaternion[0].split(":")[1]);
+        String str = "[1,2,3]";
+        if (str.contains("1")) {
+            System.out.println("1");
+        }
     }
 }

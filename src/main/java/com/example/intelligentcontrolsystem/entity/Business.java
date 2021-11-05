@@ -1,107 +1,151 @@
 package com.example.intelligentcontrolsystem.entity;
 
 
+import java.util.List;
+
 public class Business {
 
     private String src;
 
     private String dst;
 
+    private String srcPort;
+
+    private String dstPort;
+
     private String route;
 
-    private String link_type;
+    private String linkType;
 
     private String bandwidth;
 
-    private String delay;
+    private long delay;
 
-    private String time;
+    private String sendTime;
 
-    private String type;
+    private String sendPacket;
+
+    private String receivePacket;
+
+    private int type;
 
     private String id;
 
-    public Business(String src, String dst, String route, String link_type,
-                    String bandwidth, String delay, String time, String type) {
-        this.src = src;
-        this.dst = dst;
-        this.route = route;
-        this.link_type = link_type;
-        this.bandwidth = bandwidth;
-        this.delay = delay;
-        this.time = time;
-        this.type = type;
-    }
+    private String isArrive;
 
-    public void setSrc(String src) {
-        this.src = src;
-    }
+    public Business() {
 
-    public void setDst(String dst) {
-        this.dst = dst;
-    }
-
-    public void setRoute(String route) {
-        this.route = route;
-    }
-
-    public void setLink_type(String link_type) {
-        this.link_type = link_type;
-    }
-
-    public void setBandwidth(String bandwidth) {
-        this.bandwidth = bandwidth;
-    }
-
-    public void setDelay(String delay) {
-        this.delay = delay;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getSrc() {
         return src;
     }
 
+    public void setSrc(String src) {
+        this.src = src;
+    }
+
     public String getDst() {
         return dst;
+    }
+
+    public void setDst(String dst) {
+        this.dst = dst;
+    }
+
+    public String getSrcPort() {
+        return srcPort;
+    }
+
+    public void setSrcPort(String srcPort) {
+        this.srcPort = srcPort;
+    }
+
+    public String getDstPort() {
+        return dstPort;
+    }
+
+    public void setDstPort(String dstPort) {
+        this.dstPort = dstPort;
     }
 
     public String getRoute() {
         return route;
     }
 
-    public String getLink_type() {
-        return link_type;
+    public void setRoute(String route) {
+        this.route = route;
+    }
+
+    public String getLinkType() {
+        return linkType;
+    }
+
+    public void setLinkType(String linkType) {
+        this.linkType = linkType;
     }
 
     public String getBandwidth() {
         return bandwidth;
     }
 
-    public String getDelay() {
+    public void setBandwidth(String bandwidth) {
+        this.bandwidth = bandwidth;
+    }
+
+    public long getDelay() {
         return delay;
     }
 
-    public String getTime() {
-        return time;
+    public void setDelay(long delay) {
+        this.delay = delay;
     }
 
-    public String getType() {
+    public String getSendTime() {
+        return sendTime;
+    }
+
+    public void setSendTime(String sendTime) {
+        this.sendTime = sendTime;
+    }
+
+    public String getSendPacket() {
+        return sendPacket;
+    }
+
+    public void setSendPacket(String sendPacket) {
+        this.sendPacket = sendPacket;
+    }
+
+    public String getReceivePacket() {
+        return receivePacket;
+    }
+
+    public void setReceivePacket(String receivePacket) {
+        this.receivePacket = receivePacket;
+    }
+
+    public int getType() {
         return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getIsArrive() {
+        return isArrive;
+    }
+
+    public void setIsArrive(String isArrive) {
+        this.isArrive = isArrive;
     }
 }

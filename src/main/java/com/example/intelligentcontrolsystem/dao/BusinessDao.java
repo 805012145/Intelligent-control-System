@@ -1,7 +1,9 @@
 package com.example.intelligentcontrolsystem.dao;
 
 import com.example.intelligentcontrolsystem.entity.Business;
+import com.example.intelligentcontrolsystem.entity.PieChart;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface BusinessDao {
@@ -11,39 +13,28 @@ public interface BusinessDao {
      * @param id
      * @return
      */
-    List<Business> getBusInfoBySrcId(String id);
+    List<Business> getBusInfoBySrcId(String id, String algorithm) throws ParseException;
 
     /**
      * 根据链路找业务信息
-     * @param src
-     * @param src_port
-     * @param dst
-     * @param dst_port
-     * @param link_type
      * @return
      */
-    List<Business> getBusInfoByParam(String src, String src_port, String dst, String dst_port, String link_type);
+    List<PieChart> getBusInfoByParam(String source, String target,
+                                     String type, String algorithm) throws ParseException;
 
     /**
      * 获取业务信息
      * @return
      */
-    List<Business> getBusInfo();
 
 
-    List<Business> getBusInfo(String algorithm);
+    List<Business> getBusInfo(String algorithm) throws ParseException;
 
     /**
      * 获取不同业务种类的业务数目
      * @return
      */
-    String getBusNumByEachType();
 
-    String getBusNumByEachType(String algorithm);
+    String getBusInfoByType(String algorithm) throws ParseException;
 
-    /**
-     * 获取业务信息表中的个数
-     * @return
-     */
-    String getBusNum();
 }
