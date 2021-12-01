@@ -15,21 +15,24 @@ public class LinkDaoImpl implements LinkDao {
     @Override
     public List<Link> getAll() {
         Util util = new Util();
-        if (util.keys("link").size() == 0) {
+        if (util.keys("link*").size() == 0) {
             return null;
         }
-        List<String> keys = new ArrayList<>(util.hmget("link").keySet());
         List<Link> links = new ArrayList<>();
-        for (String key : keys) {
-            Link link = new Gson().fromJson(util.hget("link", key), new TypeToken<Link>() {}.getType());
-            if (key != null) {
-                try {
-                    link.setId(key);
-                }catch (Exception e) {
-                    e.printStackTrace();
+        List<String> tables = new ArrayList<>(util.keys("link*"));
+        for(String table : tables) {
+            List<String> keys = new ArrayList<>(util.hgetAll(table).keySet());
+            for (String key : keys) {
+                Link link = new Gson().fromJson(util.hget(table, key), new TypeToken<Link>() {}.getType());
+                if (key != null && link != null) {
+                    try {
+                        link.setId(key);
+                    }catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+                links.add(link);
             }
-            links.add(link);
         }
         util.UtilClose();
         return links;
@@ -38,7 +41,7 @@ public class LinkDaoImpl implements LinkDao {
     @Override
     public String getBWInfoOfAllType() {
         Util util = new Util();
-        if (util.keys("link").size() == 0) {
+        if (util.keys("link*").size() == 0) {
             return null;
         }
         Map<String, List<Channel>> channelMap = new HashMap<>();
@@ -49,35 +52,38 @@ public class LinkDaoImpl implements LinkDao {
         Channel.Data data5 = new Channel.Data();
         List<Channel.Data> channelDataList = new ArrayList<>();
         List<Channel> channelList = new ArrayList<>();
-        List<String> keys = new ArrayList<>(util.hmget("link").keySet());
-        for (String key : keys) {
-            Link link = new Gson().fromJson(util.hget("link", key), new TypeToken<Link>() {}.getType());
-            link.setId(key);
-            switch (link.gettype()) {
-                case "1":
-                    data1.remain += Float.parseFloat(link.getRemain_bandwidth());
-                    data1.used_Bw += (Float.parseFloat(link.getMax_bandwidth()) - Float.parseFloat(link.getRemain_bandwidth()));
-                    break;
-                case "2":
-                    data2.remain += Float.parseFloat(link.getRemain_bandwidth());
-                    data2.used_Bw += (Float.parseFloat(link.getMax_bandwidth()) - Float.parseFloat(link.getRemain_bandwidth()));
-                    break;
-                case "3":
-                    data3.remain += Float.parseFloat(link.getRemain_bandwidth());
-                    data3.used_Bw += (Float.parseFloat(link.getMax_bandwidth()) - Float.parseFloat(link.getRemain_bandwidth()));
-                    break;
-                case "4":
-                    data4.remain += Float.parseFloat(link.getRemain_bandwidth());
-                    data4.used_Bw += (Float.parseFloat(link.getMax_bandwidth()) - Float.parseFloat(link.getRemain_bandwidth()));
-                    break;
-                case "5":
-                    if(link.getRemain_bandwidth()!=null && link.getMax_bandwidth()!=null) {
-                        data5.remain += Float.parseFloat(link.getRemain_bandwidth());
-                        data5.used_Bw += (Float.parseFloat(link.getMax_bandwidth()) - Float.parseFloat(link.getRemain_bandwidth()));
-                    }
-                    break;
-                default:
-                    break;
+        List<String> tables = new ArrayList<>(util.keys("link*"));
+        for (String table : tables) {
+            List<String> keys = new ArrayList<>(util.hgetAll(table).keySet());
+            for (String key : keys) {
+                Link link = new Gson().fromJson(util.hget(table, key), new TypeToken<Link>() {}.getType());
+                link.setId(key);
+                switch (link.gettype()) {
+                    case "1":
+                        data1.remain += Float.parseFloat(link.getRemain_bandwidth());
+                        data1.used_Bw += (Float.parseFloat(link.getMax_bandwidth()) - Float.parseFloat(link.getRemain_bandwidth()));
+                        break;
+                    case "2":
+                        data2.remain += Float.parseFloat(link.getRemain_bandwidth());
+                        data2.used_Bw += (Float.parseFloat(link.getMax_bandwidth()) - Float.parseFloat(link.getRemain_bandwidth()));
+                        break;
+                    case "3":
+                        data3.remain += Float.parseFloat(link.getRemain_bandwidth());
+                        data3.used_Bw += (Float.parseFloat(link.getMax_bandwidth()) - Float.parseFloat(link.getRemain_bandwidth()));
+                        break;
+                    case "4":
+                        data4.remain += Float.parseFloat(link.getRemain_bandwidth());
+                        data4.used_Bw += (Float.parseFloat(link.getMax_bandwidth()) - Float.parseFloat(link.getRemain_bandwidth()));
+                        break;
+                    case "5":
+                        if(link.getRemain_bandwidth()!=null && link.getMax_bandwidth()!=null) {
+                            data5.remain += Float.parseFloat(link.getRemain_bandwidth());
+                            data5.used_Bw += (Float.parseFloat(link.getMax_bandwidth()) - Float.parseFloat(link.getRemain_bandwidth()));
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         channelDataList.add(data1);
@@ -97,7 +103,7 @@ public class LinkDaoImpl implements LinkDao {
     @Override
     public String getBWConOfAllLinks() {
         Util util = new Util();
-        if (util.keys("link").size() == 0) {
+        if (util.keys("link*").size() == 0) {
             return null;
         }
         TableEntity tableEntity = new TableEntity();
@@ -108,25 +114,30 @@ public class LinkDaoImpl implements LinkDao {
         bwInfo.add(header);
 
         Map<String, List<LinkEntity>> pairlinksMap = new HashMap<>();
-        List<String> keys = new ArrayList<>(util.hmget("link").keySet());
-        for (String key : keys) {
-            Link link = new Gson().fromJson(util.hget("link", key), new TypeToken<Link>() {}.getType());
-            if (key != null ) {
-                link.setId(key);
+        List<String> tables = new ArrayList<>(util.keys("link*"));
+
+        for (String table : tables) {
+            List<String> keys = new ArrayList<>(util.hgetAll(table).keySet());
+            for (String key : keys) {
+                Link link = new Gson().fromJson(util.hget(table, key), new TypeToken<Link>() {
+                }.getType());
+                if (key != null) {
+                    link.setId(key);
+                }
+                if (link.gettype().equals("5") || link.gettype().equals("0")) {
+                    continue;
+                }
+                String product = link.getSrc() + ":" + link.getDst();
+                pairlinksMap.computeIfAbsent(product, k -> new ArrayList<>());
+                LinkEntity linkEntity = new LinkEntity(link.getScore(), link.getRemain_bandwidth(), link.gettype());
+                linkEntity.setProduct(product);
+                pairlinksMap.get(product).add(linkEntity);
+                String product2 = link.getDst() + ":" + link.getSrc();
+                pairlinksMap.computeIfAbsent(product2, k -> new ArrayList<>());
+                LinkEntity linkEntity2 = new LinkEntity(link.getScore(), link.getRemain_bandwidth(), link.gettype());
+                linkEntity.setProduct(product);
+                pairlinksMap.get(product2).add(linkEntity2);
             }
-            if (link.gettype().equals("5") ||link.gettype().equals("0") ) {
-                continue;
-            }
-            String product = link.getSrc()+":"+link.getDst();
-            pairlinksMap.computeIfAbsent(product, k -> new ArrayList<>());
-            LinkEntity linkEntity = new LinkEntity(link.getScore(),link.getRemain_bandwidth(), link.gettype());
-            linkEntity.setProduct(product);
-            pairlinksMap.get(product).add(linkEntity);
-            String product2 = link.getDst()+":"+link.getSrc();
-            pairlinksMap.computeIfAbsent(product2, k -> new ArrayList<>());
-            LinkEntity linkEntity2 = new LinkEntity(link.getScore(),link.getRemain_bandwidth(), link.gettype());
-            linkEntity.setProduct(product);
-            pairlinksMap.get(product2).add(linkEntity2);
         }
         for (String key : pairlinksMap.keySet()) {
             Object[] linkInfo = new Object[13];
@@ -175,26 +186,29 @@ public class LinkDaoImpl implements LinkDao {
     public List<Link> getSingleScore() {
         Util util = new Util();
         List<Link> links = new ArrayList<>();
-        if (util.keys("link").size() == 0) {
+        if (util.keys("link*").size() == 0) {
             return null;
         }
-        Map<SrcDstPair, Float> singleLinkMap = new HashMap<>();
-        List<String> keys = new ArrayList<>(util.hmget("link").keySet());
+        Map<SrcDstPair, Float> singleLinkMap = new HashMap<>();List<String> tables = new ArrayList<>(util.keys("link*"));
 
-        for (String key : keys) {
-            Link link = new Gson().fromJson(util.hget("link", key), new TypeToken<Link>() {}.getType());
-            if (key != null) {
-                link.setId(key);
-            }
-            if (link.getScore() == null) {
-                links.add(link);
-                continue;
-            }
-            SrcDstPair srcDstPair = new SrcDstPair(link.getSrc(), link.getDst());
-            if (!singleLinkMap.containsKey(srcDstPair)) {
-                singleLinkMap.put(srcDstPair, Float.parseFloat(link.getScore()));
-            }else {
-                singleLinkMap.put(srcDstPair, (singleLinkMap.get(srcDstPair) + Float.parseFloat(link.getScore())) / 2);
+        for (String table : tables) {
+            List<String> keys = new ArrayList<>(util.hgetAll(table).keySet());
+            for (String key : keys) {
+                Link link = new Gson().fromJson(util.hget(table, key), new TypeToken<Link>() {
+                }.getType());
+                if (key != null) {
+                    link.setId(key);
+                }
+                if (link.getScore() == null) {
+                    links.add(link);
+                    continue;
+                }
+                SrcDstPair srcDstPair = new SrcDstPair(link.getSrc(), link.getDst());
+                if (!singleLinkMap.containsKey(srcDstPair)) {
+                    singleLinkMap.put(srcDstPair, Float.parseFloat(link.getScore()));
+                } else {
+                    singleLinkMap.put(srcDstPair, (singleLinkMap.get(srcDstPair) + Float.parseFloat(link.getScore())) / 2);
+                }
             }
         }
         util.UtilClose();

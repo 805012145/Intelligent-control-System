@@ -15,10 +15,9 @@ public final class Util {
 
     private Jedis jedis;
 
-    private String ip = "192.168.0.104";
+    private String ip = "10.170.18.100";
 
-    private int port = 3232;
-
+    private int port = 6379;
 
     public Util(){
         jedis = new Jedis(ip, port, 100000);
@@ -190,7 +189,7 @@ public final class Util {
      * @param key 键
      * @return 对应的多个键值
      */
-    public Map<String, String> hmget(String key) {
+    public Map<String, String> hgetAll(String key) {
         if (key!=null) {
             return jedis.hgetAll(key);
         }else {
@@ -255,7 +254,6 @@ public final class Util {
             return false;
         }
     }
-
 
     /**
      * 向一张hash表中放入数据,如果不存在将创建

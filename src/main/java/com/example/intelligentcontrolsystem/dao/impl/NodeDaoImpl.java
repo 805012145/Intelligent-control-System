@@ -17,28 +17,39 @@ public class NodeDaoImpl implements NodeDao {
     public List<Node> getAll() {
         Util util = new Util();
         if(util.keys("node:*").size() == 0) {
+            util.UtilClose();
             return null;
         }
         List<Node> nodes = new ArrayList<>();
-        List<String> c_keys = new ArrayList<>(util.hmget("node:Controller").keySet()); //controller表里的item集合作为键集合
-        for (String key : c_keys) {
-            Controller controller = new Gson().fromJson(util.hget("node:Controller", key), new TypeToken<Controller>() {}.getType());
-            controller.setId(key);
-            nodes.add(controller);
+        List<String> c_tables = new ArrayList<>(util.keys("node:Controller*"));
+        List<String> s_tables = new ArrayList<>(util.keys("node:Switch*"));
+        List<String> h_tables = new ArrayList<>(util.keys("node:Host*"));
+        for (String table : c_tables) {
+            List<String> c_keys = new ArrayList<>(util.hgetAll(table).keySet()); //controller表里的item集合作为键集合
+            for (String key : c_keys) {
+                Controller controller = new Gson().fromJson(util.hget(table, key), new TypeToken<Controller>() {
+                }.getType());
+                controller.setId(key);
+                nodes.add(controller);
+            }
         }
-
-        List<String> s_keys = new ArrayList<>(util.hmget("node:Switch").keySet()); //Switch表里的item集合作为键集合
-        for (String key : s_keys) {
-            Switch aswitch = new Gson().fromJson(util.hget("node:Switch", key), new TypeToken<Switch>() {}.getType());
-            aswitch.setId(key);
-            nodes.add(aswitch);
+        for (String table : s_tables) {
+            List<String> s_keys = new ArrayList<>(util.hgetAll(table).keySet()); //Switch表里的item集合作为键集合
+            for (String key : s_keys) {
+                Switch aswitch = new Gson().fromJson(util.hget(table, key), new TypeToken<Switch>() {
+                }.getType());
+                aswitch.setId(key);
+                nodes.add(aswitch);
+            }
         }
-        List<String> h_keys = new ArrayList<>(util.hmget("node:Host").keySet()); //Host表里的item集合作为键集合
-        for (String key : h_keys) {
-            Host host = new Gson().fromJson(util.hget("node:Host", key), new TypeToken<Host>() {}.getType());
-            host.setId(key);
-            String id = host.getSwitch_id();
-            nodes.add(host);
+        for (String table : h_tables) {
+            List<String> h_keys = new ArrayList<>(util.hgetAll(table).keySet()); //Host表里的item集合作为键集合
+            for (String key : h_keys) {
+                Host host = new Gson().fromJson(util.hget(table, key), new TypeToken<Host>() {
+                }.getType());
+                host.setId(key);
+                nodes.add(host);
+            }
         }
         util.UtilClose();
         return nodes;

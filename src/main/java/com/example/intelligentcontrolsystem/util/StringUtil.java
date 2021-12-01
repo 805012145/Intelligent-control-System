@@ -1,5 +1,9 @@
 package com.example.intelligentcontrolsystem.util;
+import com.google.gson.Gson;
+
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class StringUtil {
     public static String[] StringToArray(String str) {
@@ -23,19 +27,14 @@ public class StringUtil {
     }
 
     public static void main(String[] args) throws ParseException {
-//        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSSS");
-//        Date date = new Date(System.currentTimeMillis());
-//        System.out.println(formatter.format(date));
-//        Long time = formatter.parse(formatter.format(date)).getTime();
-//        Long time2 = 1635931348369L;
-//        System.out.println(time.compareTo(time2));
-//        String table = "src:10.0.0.1 srcport:1 dst:10.0.0.2 dstport:1";
-//        String[] quaternion = table.split(" ");
-//
-//        System.out.println(quaternion[0].split(":")[1]);
-        String str = "[1,2,3]";
-        if (str.contains("1")) {
-            System.out.println("1");
-        }
+//        String h = "h1";
+//        String s= "s1";
+//        Map<String, String> s2h = new HashMap<>();
+//        s2h.put("name", h);
+//        s2h.put("switch", s);
+//        System.out.println(new Gson().toJson(s2h));
+        List<String>[] lists = new List[3];
+        lists[1] = Collections.singletonList("sss");
+        System.out.println(lists);
     }
 }

@@ -7,6 +7,7 @@ import com.example.intelligentcontrolsystem.service.NodeSer;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,8 +62,43 @@ public class BusinessCon {
      */
     @RequestMapping(value = "/business/info", method = RequestMethod.GET)
     @ResponseBody
-    public String getBusDelay() throws ParseException {
+    public String getBusInfoByType() throws ParseException {
         return businessSer.getBusInfoByType(algorithm);
+    }
+    /**
+     * 返回平均延时
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("/business/avgDelay")
+    @ResponseBody
+    public String getDelay() throws ParseException {
+        double[] delayList = businessSer.getBusAvgDelay(algorithm);
+        return new Gson().toJson(delayList);
+    }
+
+    /**
+     * 返回平均到达率
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("/business/avgArrivate")
+    @ResponseBody
+    public String getLoss() throws ParseException {
+        double[] arrivate = businessSer.getBusAvgArrivate(algorithm);
+        return new Gson().toJson(arrivate);
+    }
+
+    /**
+     * 返回数目
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("/business/num")
+    @ResponseBody
+    public String getNum() throws ParseException {
+        int[] num = businessSer.getBusNum(algorithm);
+        return new Gson().toJson(num);
     }
 
 }

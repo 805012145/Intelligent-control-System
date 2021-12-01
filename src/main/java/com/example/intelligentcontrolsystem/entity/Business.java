@@ -1,8 +1,5 @@
 package com.example.intelligentcontrolsystem.entity;
 
-
-import java.util.List;
-
 public class Business {
 
     private String src;
@@ -27,14 +24,34 @@ public class Business {
 
     private String receivePacket;
 
+    private String receiveTime;
+
     private int type;
 
     private String id;
 
     private String isArrive;
 
+    private String activate_node;
+
+    public String getActivate_node() {
+        return activate_node;
+    }
+
+    public void setActivate_node(String activate_node) {
+        this.activate_node = activate_node;
+    }
+
     public Business() {
 
+    }
+
+    public String getReceiveTime() {
+        return receiveTime;
+    }
+
+    public void setReceiveTime(String receiveTime) {
+        this.receiveTime = receiveTime;
     }
 
     public String getSrc() {

@@ -37,4 +37,9 @@ public interface BusinessDao {
 
     String getBusInfoByType(String algorithm) throws ParseException;
 
+    double[] getBusAvgDelay(String algorithm) throws ParseException;
+
+    double[] getBusAvgArrivate(String algorithm) throws ParseException;
+
+    int[] getBusNum(String algorithm) throws ParseException;
 }
