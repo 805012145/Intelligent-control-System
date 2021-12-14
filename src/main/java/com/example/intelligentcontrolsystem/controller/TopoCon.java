@@ -79,8 +79,6 @@ public class TopoCon {
     @ResponseBody
     public String getBusByLink(String source, String target, String type) throws ParseException {
         List<PieChart> pieCharts = businessSer.getBusInfoByParam(source, target, type, algorithm);
-        List<PieChart> rePieCharts = businessSer.getBusInfoByParam(target, source, type, algorithm);
-        pieCharts.addAll(rePieCharts);
         Map<String, List<PieChart>> map = new HashMap<>();
         map.put("routingtable", pieCharts);
         return new Gson().toJson(map);

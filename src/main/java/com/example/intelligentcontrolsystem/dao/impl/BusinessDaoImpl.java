@@ -380,7 +380,7 @@ public class BusinessDaoImpl implements BusinessDao {
             List<Business> type = new ArrayList<>();
             List<String> tables = new ArrayList<>(util.keys("*src*business*:"+i+"*"));
             for (String table : tables) {
-                Map<String, String > map;
+                Map<String, String> map;
                 map = util.hgetAll(table);
                 String[] quaternion = table.split(",");
                 Business business;

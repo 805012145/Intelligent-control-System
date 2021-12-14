@@ -39,8 +39,7 @@ public class HistoryDaoImpl implements HistoryParaDao {
                         if (util.zcard(table) - i > 0 && util.zget(table, util.zcard(table) - i - 1, util.zcard(table) - i).size() > 0) {
                             try {
                                 History_para item = new Gson().fromJson(util.zget(table, util.zcard(table) - i - 1, util.zcard(table) - i).get(0),
-                                        new TypeToken<History_para>() {
-                                        }.getType());
+                                        new TypeToken<History_para>() {}.getType());
                                 tempList.add(item);
                             }catch (Exception e) {
                                 System.out.println("drop");
