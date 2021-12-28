@@ -12,6 +12,11 @@ import java.util.List;
 
 @Repository
 public class NodeDaoImpl implements NodeDao {
+//    public static void main(String[] args) {
+//        Util util = new Util();
+//        List<String> c_tables = new ArrayList<>(util.keys("node:Controller:*"));
+//        System.out.println(c_tables);
+//    }
 
     @Override
     public List<Node> getAll() {
@@ -21,15 +26,14 @@ public class NodeDaoImpl implements NodeDao {
             return null;
         }
         List<Node> nodes = new ArrayList<>();
-        List<String> c_tables = new ArrayList<>(util.keys("node:Controller*"));
-        List<String> s_tables = new ArrayList<>(util.keys("node:Switch*"));
-        List<String> h_tables = new ArrayList<>(util.keys("node:Host*"));
+        List<String> c_tables = new ArrayList<>(util.keys("node:Controller:*"));
+        List<String> s_tables = new ArrayList<>(util.keys("node:Switch:*"));
+        List<String> h_tables = new ArrayList<>(util.keys("node:Host:*"));
         for (String table : c_tables) {
             List<String> c_keys = new ArrayList<>(util.hgetAll(table).keySet()); //controller表里的item集合作为键集合
             for (String key : c_keys) {
                 Controller controller = new Gson().fromJson(util.hget(table, key), new TypeToken<Controller>() {
                 }.getType());
-                controller.setId(key);
                 nodes.add(controller);
             }
         }
@@ -38,7 +42,6 @@ public class NodeDaoImpl implements NodeDao {
             for (String key : s_keys) {
                 Switch aswitch = new Gson().fromJson(util.hget(table, key), new TypeToken<Switch>() {
                 }.getType());
-                aswitch.setId(key);
                 nodes.add(aswitch);
             }
         }
@@ -47,7 +50,6 @@ public class NodeDaoImpl implements NodeDao {
             for (String key : h_keys) {
                 Host host = new Gson().fromJson(util.hget(table, key), new TypeToken<Host>() {
                 }.getType());
-                host.setId(key);
                 nodes.add(host);
             }
         }

@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import com.example.intelligentcontrolsystem.entity.Business;
 import com.example.intelligentcontrolsystem.entity.PieChart;
 import com.example.intelligentcontrolsystem.service.BusinessSer;
+import com.example.intelligentcontrolsystem.service.LinkSer;
 import com.example.intelligentcontrolsystem.service.TestSer;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,18 @@ public class TestCon {
 
     private TestSer test_ser;
     private BusinessSer businessSer;
+    private LinkSer linkSer;
     @Autowired
     public void setTest_ser(TestSer test_ser) {
         this.test_ser = test_ser;
     }
     @Autowired
-    public TestCon(BusinessSer businessSer) {
+    public void setBusinessSer(BusinessSer businessSer) {
         this.businessSer = businessSer;
+    }
+    @Autowired
+    public void setLinkSer(LinkSer linkSer) {
+        this.linkSer = linkSer;
     }
 
 //    @RequestMapping(value = "/test", method = RequestMethod.GET)
@@ -62,5 +68,11 @@ public class TestCon {
             System.out.println("have no data");
         }
         return null;
+    }
+    @RequestMapping(value = "/test/topo/singleLinkState/{src}/{dst}", method = RequestMethod.GET)
+    @ResponseBody
+    public String getSingleLinkState(@PathVariable String src, @PathVariable String dst) throws ParseException {
+        System.out.println(linkSer.getSingleLinkState(src, dst));
+        return linkSer.getSingleLinkState(src, dst);
     }
 }

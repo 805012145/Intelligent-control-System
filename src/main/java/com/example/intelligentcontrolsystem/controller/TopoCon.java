@@ -66,6 +66,7 @@ public class TopoCon {
         List<Business> businesses = businessSer.getBusInfoBySrcId(id, algorithm);
         Map<String, List<Business>> map = new HashMap<>();
         map.put("routingtable", businesses);
+        System.out.println(map);
         return new Gson().toJson(map);
     }
 
@@ -78,6 +79,7 @@ public class TopoCon {
     @PostMapping("topo/postLinkState")
     @ResponseBody
     public String getBusByLink(String source, String target, String type) throws ParseException {
+        System.out.println(source);
         List<PieChart> pieCharts = businessSer.getBusInfoByParam(source, target, type, algorithm);
         Map<String, List<PieChart>> map = new HashMap<>();
         map.put("routingtable", pieCharts);
@@ -97,5 +99,12 @@ public class TopoCon {
             e.printStackTrace();
         }
         return new Gson().toJson(topoEntity);
+    }
+    @PostMapping("topo/singleLinkState")
+    @ResponseBody
+    public String getSingleLinkState(String source, String target) throws ParseException {
+        System.out.println(source +" "+target);
+        System.out.println(linkSer.getSingleLinkState(source, target));
+        return linkSer.getSingleLinkState(source, target);
     }
 }

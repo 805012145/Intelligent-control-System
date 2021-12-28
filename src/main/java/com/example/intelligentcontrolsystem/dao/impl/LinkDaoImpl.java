@@ -189,7 +189,8 @@ public class LinkDaoImpl implements LinkDao {
         if (util.keys("link*").size() == 0) {
             return null;
         }
-        Map<SrcDstPair, Float> singleLinkMap = new HashMap<>();List<String> tables = new ArrayList<>(util.keys("link*"));
+        Map<SrcDstPair, Float> singleLinkMap = new HashMap<>();
+        List<String> tables = new ArrayList<>(util.keys("link*"));
 
         for (String table : tables) {
             List<String> keys = new ArrayList<>(util.hgetAll(table).keySet());
@@ -218,6 +219,41 @@ public class LinkDaoImpl implements LinkDao {
             links.add(link);
         }
         return links;
+    }
+
+    @Override
+    public String getSingleLinkState(String source, String target) {
+        Util util = new Util();
+        Object[] linkList = new Object[5];
+        Object[] header = {"source", "amount", "type"};
+        linkList[0] = header;
+        TableEntity tableEntity = new TableEntity();
+        TableEntity.Data data = new TableEntity.Data();
+        int domain = 2;
+        if (Integer.parseInt(source) <= 12) {
+            domain = 1;
+        }
+        Map<String, String> linkMap = util.hgetAll("link:"+domain);
+        for (String key : linkMap.keySet()) {
+            Object[] linkInfo = new Object[3];
+            Link link = new Gson().fromJson(linkMap.get(key), new TypeToken<Link>() {
+            }.getType());
+            if (link.getSrc().equals(source) && link.getDst().equals(target) || link.getSrc().equals(target) && link.getDst().equals(source)) {
+                linkInfo[0] = link.getScore() == null ? "0":link.getScore() ;
+                linkInfo[1] = link.getRemain_bandwidth() == null ? "0" : link.getRemain_bandwidth() ;
+                linkInfo[2] = link.gettype();
+                linkList[Integer.parseInt(link.gettype()) == 0 ? 1 : Integer.parseInt(link.gettype())] = linkInfo;
+            }
+        }
+        for (int i = 0; i < 5; i++) {
+            if (linkList[i] == null) {
+                Object[] linkInfo = {"0", "0", String.valueOf(i)};
+                linkList[i] = linkInfo;
+            }
+        }
+        data.setSource(linkList);
+        tableEntity.setData(data);
+        return new Gson().toJson(tableEntity);
     }
 
     public static class LinkEntity {

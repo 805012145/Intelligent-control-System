@@ -97,6 +97,7 @@ public class BusinessDaoImpl implements BusinessDao {
     @Override
     public List<Business> getBusInfo(String algorithm) throws ParseException {
         Util util = new Util();
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         if (util.keys("*\"src\"*").size() == 0) {
             util.UtilClose();
             return null;
@@ -104,9 +105,9 @@ public class BusinessDaoImpl implements BusinessDao {
         List<Business> businesses = new ArrayList<>();
         for (int i = 1; i <=6 ; i++) {
             List<String> tables = new ArrayList<>(util.keys("*src*business*:"+i+"*"));
+            List<String> delList = new ArrayList<>();
             for (String table : tables) {
-                Map<String, String > map;
-                map = util.hgetAll(table);
+                Map<String, String > map = util.hgetAll(table);
                 String[] quaternion = table.split(",");
                 Business business;
                 if (map.get(algorithm+"_route") != null) {
@@ -116,6 +117,13 @@ public class BusinessDaoImpl implements BusinessDao {
                         business = getBusiness(algorithm, quaternion, false, map);
                     }
                     businesses.add(business);
+                }else if (DateUtil.betweenMs(DateTime.of(formatter.parse(map.get("send_time").substring(0, 23))),
+                        DateTime.of(new Date())) > 5000){
+                    delList.add(table);
+                    if (delList.size() == 10) {
+                        util.del((String[]) delList.toArray());
+                        delList.clear();
+                    }
                 }
             }
         }
@@ -130,9 +138,7 @@ public class BusinessDaoImpl implements BusinessDao {
         busInfo.add(header);
         TableEntity tableEntity = new TableEntity();
         TableEntity.Data data = new TableEntity.Data();
-        System.out.println(DateUtil.now());
         List<Business>[] typeList = getTypeList(algorithm);
-        System.out.println(DateUtil.now());
         int i = 0;
         for (List<Business> type : typeList) {
             i++;
@@ -170,10 +176,13 @@ public class BusinessDaoImpl implements BusinessDao {
     }
 
     @Override
-    public double[] getBusAvgDelay(String algorithm) throws ParseException {
+    public Object[] getBusAvgDelay(String algorithm) throws ParseException {
         Util util = new Util();
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        double[] delayList = new double[6];
+        Object[] delayList = new Object[7];
+        for (int i = 1; i < 7; i++) {
+            delayList[i] = 0;
+        }
         if (util.keys("*\"src\"*").size() == 0) {
             util.UtilClose();
             return delayList;
@@ -192,27 +201,31 @@ public class BusinessDaoImpl implements BusinessDao {
                     Long time2 = formatter.parse(flag).getTime();
                     if (time1.compareTo(time2) > 0) {
                         size++;
-                        delayList[i-1] += business.getDelay();
+                        delayList[i] = (long)delayList[i] + business.getDelay();
                     }
                 }
             }else {
                 size = type.size();
                 for (Business business : type) {
-                    delayList[i-1] += business.getDelay();
+                    delayList[i] = Long.parseLong(delayList[i].toString()) + business.getDelay();
                 }
             }
-            delayList[i - 1] = size == 0 ? 0 : delayList[i - 1] / size;
+            delayList[i] = size == 0 ? 0 : Double.parseDouble(delayList[i].toString()) / size;
             flagMap.put(delayFlag, type.get(0).getReceiveTime());
         }
+        delayList[0] = formatter.format(new Date());
         util.UtilClose();
         return delayList;
     }
 
     @Override
-    public double[] getBusAvgArrivate(String algorithm) throws ParseException {
+    public Object[] getBusAvgArrivate(String algorithm) throws ParseException {
         Util util = new Util();
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        double[] arrivateList = new double[6];
+        Object[] arrivateList = new Object[7];
+        for (int i = 1; i < 7; i++) {
+            arrivateList[i] = 0;
+        }
         if (util.keys("*\"src\"*").size() == 0) {
             util.UtilClose();
             return arrivateList;
@@ -253,18 +266,22 @@ public class BusinessDaoImpl implements BusinessDao {
                     }
                 }
             }
-            arrivateList[i-1] = size == 0?  0:(size-lossFlow)/(1.0 * size);
+            arrivateList[i] = size == 0?  0:(size-lossFlow)/(1.0 * size);
             flagMap.put(arrivateFlag, type.get(0).getSendTime());
         }
+        arrivateList[0] = formatter.format(new Date());
         util.UtilClose();
         return arrivateList;
     }
 
     @Override
-    public int[] getBusNum(String algorithm) throws ParseException {
+    public Object[] getBusNum(String algorithm) throws ParseException {
         Util util = new Util();
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        int[] numList = new int[6];
+        Object[] numList = new Object[7];
+        for (int i = 1; i < 7; i++) {
+            numList[i] = 0;
+        }
         if (util.keys("*\"src\"*").size() == 0) {
             util.UtilClose();
             return numList;
@@ -278,19 +295,21 @@ public class BusinessDaoImpl implements BusinessDao {
             if (type.size() <= 0) continue;
             String flag = flagMap.get(numFlag);
             for (Business business : type) {
-                if (flag!=null) {
-                    Long time1 = formatter.parse(business.getSendTime()).getTime();
-                    Long time2 = formatter.parse(flag).getTime();
-                    if (time1.compareTo(time2) > 0) {
-                        size++;
-                    }
-                } else {
-                    size = type.size();
-                }
+//                if (flag!=null) {
+//                    Long time1 = formatter.parse(business.getSendTime()).getTime();
+//                    Long time2 = formatter.parse(flag).getTime();
+//                    if (time1.compareTo(time2) > 0) {
+//                        size++;
+//                    }
+//                } else {
+//                    size = type.size();
+//                }
+                size++;
             }
-            numList[i-1] = size;
+            numList[i] = size;
             flagMap.put(numFlag, type.get(0).getSendTime());
         }
+        numList[0] = formatter.format(new Date());
         util.UtilClose();
         return numList;
     }
@@ -353,12 +372,21 @@ public class BusinessDaoImpl implements BusinessDao {
         for (int i = 1; i <=6 ; i++) {
             List<Business> type = new ArrayList<>();
             List<String> tables = new ArrayList<>(util.keys("*src*business*:"+i+"*"));
+            List<String> delList = new ArrayList<>();
             for (String table : tables) {
                 Map<String, String > map;
                 map = util.hgetAll(table);
                 String[] quaternion = table.split(",");
                 Business business;
                 if (map.get("recv_time").equals("0")) {
+                    if (DateUtil.betweenMs(DateTime.of(formatter.parse(map.get("send_time").substring(0, 23))),
+                            DateTime.of(new Date())) > 5000) {
+                        delList.add(table);
+                        if (delList.size() == 10) {
+                            util.del((String[]) delList.toArray());
+                            delList.clear();
+                        }
+                    }
                     continue;
                 }
                 business = getBusiness(algorithm, quaternion, true, map);
@@ -379,6 +407,7 @@ public class BusinessDaoImpl implements BusinessDao {
         for (int i = 1; i <=6 ; i++) {
             List<Business> type = new ArrayList<>();
             List<String> tables = new ArrayList<>(util.keys("*src*business*:"+i+"*"));
+            List<String> delList = new ArrayList<>();
             for (String table : tables) {
                 Map<String, String> map;
                 map = util.hgetAll(table);
@@ -386,6 +415,15 @@ public class BusinessDaoImpl implements BusinessDao {
                 Business business;
                 if (map.get("recv_time").equals("0")) {
                     business = getBusiness(algorithm, quaternion, false, map);
+                    if (DateUtil.betweenMs(DateTime.of(formatter.parse(map.get("send_time").substring(0, 23))),
+                            DateTime.of(new Date())) > 5000) {
+                        delList.add(table);
+                        if (delList.size() == 10) {
+                            util.del((String[]) delList.toArray());
+                            delList.clear();
+                        }
+                    }
+                    System.out.println(delList);
                 } else {
                     business = getBusiness(algorithm, quaternion, true, map);
                 }

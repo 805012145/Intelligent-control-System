@@ -43,17 +43,17 @@ public class BusinessSerImpl implements BusinessSer {
     }
 
     @Override
-    public double[] getBusAvgDelay(String algorithm) throws ParseException {
+    public Object[] getBusAvgDelay(String algorithm) throws ParseException {
         return businessDao.getBusAvgDelay(algorithm);
     }
 
     @Override
-    public double[] getBusAvgArrivate(String algorithm) throws ParseException {
+    public Object[] getBusAvgArrivate(String algorithm) throws ParseException {
         return businessDao.getBusAvgArrivate(algorithm);
     }
 
     @Override
-    public int[] getBusNum(String algorithm) throws ParseException {
+    public Object[] getBusNum(String algorithm) throws ParseException {
         return businessDao.getBusNum(algorithm);
     }
 

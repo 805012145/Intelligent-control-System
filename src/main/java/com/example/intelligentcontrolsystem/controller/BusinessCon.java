@@ -73,7 +73,7 @@ public class BusinessCon {
     @RequestMapping("/business/avgDelay")
     @ResponseBody
     public String getDelay() throws ParseException {
-        double[] delayList = businessSer.getBusAvgDelay(algorithm);
+        Object[] delayList = businessSer.getBusAvgDelay(algorithm);
         return new Gson().toJson(delayList);
     }
 
@@ -85,7 +85,7 @@ public class BusinessCon {
     @RequestMapping("/business/avgArrivate")
     @ResponseBody
     public String getLoss() throws ParseException {
-        double[] arrivate = businessSer.getBusAvgArrivate(algorithm);
+        Object[] arrivate = businessSer.getBusAvgArrivate(algorithm);
         return new Gson().toJson(arrivate);
     }
 
@@ -97,7 +97,7 @@ public class BusinessCon {
     @RequestMapping("/business/num")
     @ResponseBody
     public String getNum() throws ParseException {
-        int[] num = businessSer.getBusNum(algorithm);
+        Object[] num = businessSer.getBusNum(algorithm);
         return new Gson().toJson(num);
     }
 

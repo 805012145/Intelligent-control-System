@@ -37,4 +37,9 @@ public class LinkSerImpl implements LinkSer {
     public List<Link> getSingleScore() {
         return linkDao.getSingleScore();
     }
+
+    @Override
+    public String getSingleLinkState(String source, String target) {
+        return linkDao.getSingleLinkState(source, target);
+    }
 }

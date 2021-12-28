@@ -13,4 +13,6 @@ public interface LinkDao {
     String getBWConOfAllLinks();
 
     List<Link> getSingleScore();
+
+    String getSingleLinkState(String source, String target);
 }

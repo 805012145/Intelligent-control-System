@@ -16,9 +16,9 @@ public interface BusinessSer {
 
     String getBusInfoByType(String algorithm) throws ParseException;
 
-    double[] getBusAvgDelay(String algorithm) throws ParseException;
+    Object[] getBusAvgDelay(String algorithm) throws ParseException;
 
-    double[] getBusAvgArrivate(String algorithm) throws ParseException;
+    Object[] getBusAvgArrivate(String algorithm) throws ParseException;
 
-    int[] getBusNum(String algorithm) throws ParseException;
+    Object[] getBusNum(String algorithm) throws ParseException;
 }
